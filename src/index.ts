@@ -1,16 +1,15 @@
 import IUpdate from "./ebr/contract/IUpdate";
 import _Id from "./ebr/contract/_Id";
-import { Schema } from "mongoose";
 import Generator from "./ebr/contract/Generator";
+import Schema from "./ebr/contract/ISchema";
 
-const ve = new Schema();
 
 interface Lol {
   name: string;
   id: number;
 }
 
-const c: ISchema<IUpdate<Lol>> = {
+const c: Schema<IUpdate<Lol>> = {
   propParams: {
     date: d => true,
     before: d => false,
