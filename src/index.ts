@@ -1,6 +1,6 @@
 import IUpdate from "./ebr/contract/IUpdate";
 import _Id from "./ebr/contract/_Id";
-import Generator from "./ebr/contract/Generator";
+import Generator from "./ia/gateway/contracts/Validator";
 import Schema from "./ebr/contract/ISchema";
 
 
@@ -18,5 +18,5 @@ const c: Schema<IUpdate<Lol>> = {
 };
 
 const v = new Generator(c);
-const response = v.generate({ date: new Date(), after: {} });
+const response = v.validate({ date: new Date(), after: {} });
 console.log(response);

@@ -15,7 +15,7 @@ type v = Test<Lol>;
 
 type Schema<T> = {
   propParams: ISchema<T>;
-  classParams?: Condition<T>;
+  classParams?: (Condition<T>);
 };
 
 export default Schema;
