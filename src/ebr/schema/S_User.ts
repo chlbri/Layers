@@ -6,10 +6,10 @@ const S_User: Schema<E_User> = {
     createdAt: d => true,
     updates: d => true,
     firstnames: d => true,
+    mdp: d => true,
     lastname: d => true,
     deletedAt: d => true,
     login: d => true,
-    name: d => true,
     _id: d => true
   },
   classParams: arg => true

@@ -14,7 +14,7 @@ const c: Schema<IUpdate<Lol>> = {
     date: d => true,
     before: d => false,
     after: d => true
-  },classParams:()=> false
+  },classParams:()=> true
 };
 
 const v = new Generator(c);
