@@ -2,7 +2,7 @@
 // import Entity from "../../../ebr/contract/Entity";
 // import _Id from "../../../ebr/contract/_Id";
 
-import E_User from "../../../ebr/entity/E_User";
+import E_User from "../../../ebr/entity/user";
 
 type QuerySchema<T, K extends keyof T> = Extract<K, keyof T>;
 
@@ -90,12 +90,12 @@ type Test = DeleteMany<E_User, "_id">;
 type BulkMany<T, K extends keyof T = keyof T> = (
   args: Partial<T>[],
   ...others: any[]
-) => ResultOne<T, K, number | boolean> | ResultMany<T, K, number | boolean>;
+) => ResultMany<T, K, number | boolean>;
 
 type BulkOne<T, K extends keyof T = keyof T> = (
   args: Partial<T>,
   ...others: any[]
-) => ResultOne<T, K, number | boolean> | ResultMany<T, K, number | boolean>;
+) => ResultOne<T, K, number | boolean> ;
 
 type EntityQuery<T, K extends keyof T = keyof T> =
   | CreateOne<T, K>

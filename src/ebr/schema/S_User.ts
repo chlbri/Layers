@@ -1,5 +1,5 @@
 import Schema from "../contract/ISchema";
-import E_User from "../entity/E_User";
+import E_User from "../entity/user";
 
 const S_User: Schema<E_User> = {
   propParams: {

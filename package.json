@@ -3,15 +3,14 @@
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
    "devDependencies": {
-      "@types/mongoose": "^5.7.8",
+      "@types/mongodb": "^3.5.4",
       "@types/node": "^8.0.29",
       "ts-node": "3.3.0",
       "typescript": "3.3.3333"
    },
    "dependencies": {
       "mikro-orm": "^3.6.0",
-      "mongodb": "^3.5.5",
-      "mongoose": "^5.9.7"
+      "mongodb": "^3.5.5"
    },
    "scripts": {
       "start": "ts-node src/index.ts"

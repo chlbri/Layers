@@ -1,27 +1,115 @@
-// import {
-//   Collection,
-//   CollectionBulkWriteOptions,
-//   CollectionInsertManyOptions,
-//   CollectionInsertOneOptions,
-//   CommonOptions,
-//   FilterQuery,
-//   FindOneOptions,
-//   MongoClient,
-//   ObjectId,
-//   UpdateManyOptions,
-//   UpdateOneOptions,
-//   EndCallback,
-//   MongoCountPreferences
-// } from "mongodb";
+import {
+  Collection,
+  CollectionBulkWriteOptions,
+  CollectionInsertManyOptions,
+  CollectionInsertOneOptions,
+  CommonOptions,
+  FilterQuery,
+  FindOneOptions,
+  MongoClient,
+  ObjectId,
+  UpdateManyOptions,
+  UpdateOneOptions,
+  EndCallback,
+  MongoCountPreferences,
+  MongoClientOptions,
+  Db,
+  MongoClientCommonOption
+} from "mongodb";
 
-// import { PromiseFunction, Await, CursorFunction } from "./Types";
-// import CRUD from "../../../../abr/contract/crud/CRUD";
+import Validator from "../../../../ia/gateway/contracts/Validator";
+import E_User from "../../../../ebr/entity/user";
 
-// const conStr = "localhost.21017"
-// const DB_NAME = "testca"
+// #region MongoDB Config
+const MONGODB_URL = "mongodb://localhost:27017";
+const DB_NAME = "testca";
+const CON_OPTIONS = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  connectTimeoutMS: 5000
+};
+// #endregion
 
-// const client = new MongoClient("localhost.21017");
-// const db = client.db("DB_NAME");
+function getCollectionForMutation<T>(
+  args: Partial<T>[],
+  col: string,
+  conStr: string = MONGODB_URL,
+  db = DB_NAME,
+  validator?: Validator<T>,
+  conOptions: MongoClientOptions = CON_OPTIONS
+) {
+  if (validator && !validator.validate(...args)) return undefined;
+  return getCollection(col, db, conStr, conOptions);
+}
+
+async function getCollection<T>(
+  col: string,
+  db = DB_NAME,
+  conStr = MONGODB_URL,
+  conOptions: MongoClientOptions = CON_OPTIONS
+) {
+  const client = new MongoClient(conStr, conOptions);
+  const connect = await client
+    .connect()
+    .then()
+    .catch(() => undefined);
+
+  return connect ? connect.db(db).collection<T>(col) : connect;
+}
+
+async function bulkCollection<T>(
+  col: Collection<T>,
+  queries: any[],
+  args?: CollectionBulkWriteOptions
+) {
+  const result = await col
+    .bulkWrite(queries, args)
+    .then()
+    .catch(() => undefined);
+  return result;
+}
+
+type Projection<T, K extends keyof T = keyof T> = {
+  [P in K | "_id"]-?: boolean;
+};
+
+type WantedReturn<T, K extends keyof T = keyof T> = Promise<
+  Projection<T, K> | Projection<T, K>[] | T | T[] | boolean
+>;
+
+type T = Projection<E_User, "login">;
+
+
+async function queryCol<T, K extends keyof T = keyof T>(
+  col: Collection<T>,
+  arg?: Partial<T>,
+  options?: FindOneOptions,
+  projection?: Projection<T, K>
+) /* : WantedReturn<T, K> */ {
+  const result = arg
+    ? projection
+      ? await col
+          .find(arg, options)
+          .project(projection)
+          .toArray()
+          .catch(() => undefined)
+      : await col
+          .find(arg, options)
+          .toArray()
+          .catch(() => undefined)
+    : projection
+    ? await col
+        .find(arg)
+        .project(projection)
+        .toArray()
+        .catch(() => undefined)
+    : await col
+        .find(arg)
+        .toArray()
+        .catch(() => undefined);
+  return result;
+}
+
 
 // export default class<T> {
 //   readonly collection: Collection<T>;
@@ -30,9 +118,9 @@
 
 //   public readonly forceClose = client.close(true);
 
-//   constructor(readonly name: string) {
+//   constructor(public readonly col: string) {
 //     // var t = T.name;
-//     this.collection = db.collection<T>(name);
+//     this.collection = db.collection<T>(col);
 //   }
 
 //   // #region Golden Globe Functions
@@ -40,17 +128,22 @@
 //     func: F,
 //     ...args: Parameters<F>
 //   ) {
+//     const connect = await getConnection();
+//     if (!connect) return;
+//     const col = getCollection(this.col, connect);
 //     let result: Await<ReturnType<F>>;
-//     client.connect((err, client) => {
-
-//     })
+//     let re = await col
+//     .func(...args)
+//     .then()
+//     .catch(() => undefined);
+//   client.close();
 //     client.connect().then(async () => {
 //       await func(...args)
 //         .then(r => (result = r))
 //         .catch(this.catch)
 //         .finally(client.close);
 //     });
-//     return result;
+//     return result ? result : {};
 //   }
 
 //   private async connectMutation<F extends PromiseFunction<any>>(
@@ -71,7 +164,7 @@
 //     func: F,
 //     ...args: Parameters<F>
 //   ) {
-//     let result: T[];
+//     let result: T[] = [];
 //     result = this.connectQuery<F>(func, args, result);
 //     return result;
 //   }

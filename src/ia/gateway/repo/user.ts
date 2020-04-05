@@ -5,24 +5,19 @@ import {
   UpdateOneUser,
   DeleteOneUser,
   BulkUser
-} from "../query/Q_User";
+} from "../query/user";
 import {
   CREATE,
   CREDENTIALS,
   ALL,
   NAME,
   DELETE
-} from "../query_schema/QS_User";
+} from "../../../ebr/helpers/user";
 import IRepoEntity from "../contracts/Repo";
-import E_User from "../../../ebr/entity/E_User";
+import E_User from "../../../ebr/entity/user";
 import { EntityQuery } from "../contracts/Types";
 
-export default class AR_User extends IRepoEntity<E_User> {
-  validator!: Validator<E_User>;
-  constructor(...validators: Validator<E_User>[]) {
-    super();
-    this.validator = validators[0];
-  }
+export default class Repo_User extends IRepoEntity<E_User> {
   create!: CreateOneUser<NAME>;
   read!: ReadOneUser;
   update!: UpdateOneUser<NAME>;

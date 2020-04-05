@@ -14,8 +14,8 @@ type Test<T> = T extends { [P in keyof T]: infer U } ? U : never;
 type v = Test<Lol>;
 
 type Schema<T> = {
-  propParams: ISchema<T>;
-  classParams?: (Condition<T>);
+  propParams: ISchema<Partial<T>>;
+  classParams?: (Condition<Partial<T>>);
 };
 
 export default Schema;
