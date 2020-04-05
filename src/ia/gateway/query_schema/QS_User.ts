@@ -1,6 +1,6 @@
 import {
   QuerySchema,
-  Bulk,
+  BulkMany,
   CreateOne,
   ReadOne,
   UpdateOne,

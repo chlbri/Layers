@@ -6,7 +6,7 @@ export default class Create<T extends Entity> {
   constructor(public validator: Validator<T>, args: T) {
   }
 
-  arg: (...args:[]) => any;
+  arg!: (...args:[]) => any;
 
   exec() {
     return this.validator.validate(this.arg());

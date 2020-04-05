@@ -1,10 +1,6 @@
 import { Cursor } from "mongodb";
 
-type Await<T> = T extends {
-  then(onfulfilled?: (value: infer U) => unknown): unknown;
-}
-  ? U
-  : T;
+type Await<T> = T extends Promise<infer U> ? U : T;
 
 type Yield<T> = T extends {
   addCursorFlag(flag: string, value: boolean): Cursor<infer U>;
@@ -39,3 +35,4 @@ type PromiseFunction<T> = (...args: any[]) => Promise<T>;
 type CursorFunction<T> = (...args: any[]) => Cursor<T>;
 
 export { Await, Yield, CursorFunction, PromiseFunction };
+

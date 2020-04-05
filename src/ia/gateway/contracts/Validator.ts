@@ -8,12 +8,12 @@ export default class Validator<T> {
     for (const arg of args) {
       for (const key in arg) {
         const check = this.schema.propParams[key](arg[key]);
-        if (!check) return;
+        if (!check) return false;
       }
       if (this.schema.classParams && !this.schema.classParams(arg)) {
-        return;
+        return false;
       }
-      return arg;
     }
+    return true;
   }
 }

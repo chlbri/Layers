@@ -53,13 +53,13 @@ type CreateMany<T, K extends keyof T = keyof T> = (
 type ReadOne<T, K extends keyof T = keyof T> = (
   arg: Partial<T>,
   ...others: any[]
-) => ResultOne<T, K>;
+) => ResultOne<T, K, false>;
 
 type ReadMany<T, K extends keyof T = keyof T> = (
   args: Partial<T>[],
   count: number,
   ...others: any[]
-) => Required<Pick<T, K>>[];
+) => ResultMany<T, K, number | boolean>;
 
 type UpdateOne<T, K extends keyof T = keyof T> = (
   filter: Partial<T>,
@@ -87,8 +87,13 @@ type DeleteMany<T, K extends keyof T = keyof T> = ResultMany<
 
 type Test = DeleteMany<E_User, "_id">;
 
-type Bulk<T, K extends keyof T = keyof T> = (
+type BulkMany<T, K extends keyof T = keyof T> = (
   args: Partial<T>[],
+  ...others: any[]
+) => ResultOne<T, K, number | boolean> | ResultMany<T, K, number | boolean>;
+
+type BulkOne<T, K extends keyof T = keyof T> = (
+  args: Partial<T>,
   ...others: any[]
 ) => ResultOne<T, K, number | boolean> | ResultMany<T, K, number | boolean>;
 
@@ -101,7 +106,7 @@ type EntityQuery<T, K extends keyof T = keyof T> =
   | UpdateMany<T, K>
   | DeleteOne<T, K>
   | DeleteMany<T, K>
-  | Bulk<T, K>;
+  | BulkMany<T, K>;
 
 type Custom<I, O> = (arg: Required<I>, ...others: []) => O;
 
@@ -115,9 +120,11 @@ export {
   UpdateMany,
   DeleteOne,
   DeleteMany,
-  Bulk,
+  BulkOne,
+  BulkMany,
   Custom,
   Query,
   EntityQuery,
-  ResultOne as Result
+  ResultOne,
+  ResultMany
 };

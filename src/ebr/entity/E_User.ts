@@ -10,9 +10,8 @@ export default interface E_User extends Entity, _Id, ITimestamps<E_User> {
   mdp?: string;
 }
 
-class E_UserC implements Entity, E_User {
+export class E_UserC implements E_User {
   constructor(
-    public _id?: any,
     public firstnames?: string[] | string,
     public lastname?: string,
     public login?: string,
