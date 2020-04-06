@@ -34,5 +34,9 @@ type PromiseFunction<T> = (...args: any[]) => Promise<T>;
 
 type CursorFunction<T> = (...args: any[]) => Cursor<T>;
 
-export { Await, Yield, CursorFunction, PromiseFunction };
+type Projection<T, K extends keyof T = keyof T> = {
+  [P in K | "_id"]-?: boolean;
+};
 
+
+export { Await, Yield, CursorFunction, PromiseFunction, Projection };

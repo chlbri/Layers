@@ -1,5 +1,5 @@
-import S from "../../../ebr/contract/ISchema";
-import Entity from "../../../ebr/contract/Entity";
+import S from "./types/schema";
+import Entity from "./Entity";
 
 export default class Validator<T> {
   constructor(public schema: S<T>) {}

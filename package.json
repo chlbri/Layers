@@ -9,6 +9,7 @@
       "typescript": "3.3.3333"
    },
    "dependencies": {
+      "inversify": "^5.0.1",
       "mikro-orm": "^3.6.0",
       "mongodb": "^3.5.5"
    },

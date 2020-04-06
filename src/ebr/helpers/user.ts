@@ -1,16 +1,17 @@
-import { QuerySchema } from "../../ia/gateway/contracts/Types";
 import E_User from "../entity/user";
+import { Helper } from "../contract/types/helpers";
 
-type CREDENTIALS = QuerySchema<E_User, "login" | "mdp">;
+type CREDENTIALS = Helper<E_User, "login" | "mdp">;
 
-type NAME = QuerySchema<E_User, "firstnames" | "lastname">;
+type NAME = Helper<E_User, "firstnames" | "lastname">;
 
-type CREATE = QuerySchema<E_User, "_id" | NAME | CREDENTIALS>;
+type CREATE = Helper<E_User, "_id" | NAME | CREDENTIALS>;
+type UPDATE = Helper<E_User,  NAME | CREDENTIALS>;
 
-type DELETE = QuerySchema<E_User, "_id" | NAME>;
+type DELETE = Helper<E_User, "_id" | NAME>;
 
-type TIMESTAMPS = QuerySchema<E_User, "createdAt" | "deletedAt" | "updates">;
+type TIMESTAMPS = Helper<E_User, "createdAt" | "deletedAt" | "updates">;
 
-type ALL = CREDENTIALS | NAME | CREATE | TIMESTAMPS | DELETE;
+type ALL = CREDENTIALS | NAME | CREATE | TIMESTAMPS | DELETE | UPDATE;
 
-export { CREDENTIALS, NAME, CREATE, TIMESTAMPS, ALL, DELETE };
+export { CREDENTIALS, NAME, CREATE, TIMESTAMPS, ALL, DELETE, UPDATE };

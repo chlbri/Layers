@@ -1,4 +1,4 @@
-import Schema from "../contract/ISchema";
+import Schema from "../contract/types/schema";
 import E_User from "../entity/user";
 
 const S_User: Schema<E_User> = {

@@ -2,9 +2,7 @@
 // import Entity from "../../../ebr/contract/Entity";
 // import _Id from "../../../ebr/contract/_Id";
 
-import E_User from "../../../ebr/entity/user";
-
-type QuerySchema<T, K extends keyof T> = Extract<K, keyof T>;
+type Query<O = any, I extends any[] = any[]> = (...args: I) => O;
 
 type ResultOne<T, K extends keyof T, O = never> = Promise<
   Required<Pick<T, K>> | O
@@ -14,31 +12,17 @@ type ResultMany<T, K extends keyof T, O = never> = Promise<
   Required<Pick<T, K>>[] | O
 >;
 
-type Query<O, F extends (...args: any) => any = (...args: any) => any> = (
-  func: F,
-  ...others: Parameters<F>
-) => O;
+// type Query<O, F extends (...args: any) => any = (...args: any) => any> = (
+//   func: F,
+//   ...others: Parameters<F>
+// ) => O;
 
-type FF = Query<string, (erg: number) => any>;
-
-// type CreateOne<
-//   T,
-//   K extends keyof T = keyof T,
-//   F extends (...args: any) => any = (...args: any) => any
-// > = ((func: (...args: any) => any) => any) extends (
-//   func: (...args: infer U) => any
-// ) => any
-//   ? (
-//       arg: T,
-//       func: (...args: U) => any,
-//       ...others: U
-//     ) => ResultOne<T, K, number | boolean>
-//   : never;
-
-// type Create<T, K extends keyof T = keyof T> = Query<
-//   ResultOne<T, K, number | boolean>,
-//   [...(T | T[] | Partial<T> | Partial<T>[])[]]
-// >;
+type TT<T> = ((...args: any[]) => any) extends (
+  arg: any,
+  ...args: any[]
+) => Promise<Required<Pick<T, keyof T>>[] | boolean>
+  ? true
+  : false;
 
 type CreateOne<T, K extends keyof T = keyof T> = (
   arg: T,
@@ -79,13 +63,10 @@ type DeleteOne<T, K extends keyof T = keyof T> = (
   ...others: any[]
 ) => ResultOne<T, K, number | boolean>;
 
-type DeleteMany<T, K extends keyof T = keyof T> = ResultMany<
-  T,
-  K,
-  number | boolean
->;
-
-type Test = DeleteMany<E_User, "_id">;
+type DeleteMany<T, K extends keyof T = keyof T> = (
+  arg: Partial<T>,
+  ...others: any[]
+) => ResultMany<T, K, number | boolean>;
 
 type BulkMany<T, K extends keyof T = keyof T> = (
   args: Partial<T>[],
@@ -95,7 +76,7 @@ type BulkMany<T, K extends keyof T = keyof T> = (
 type BulkOne<T, K extends keyof T = keyof T> = (
   args: Partial<T>,
   ...others: any[]
-) => ResultOne<T, K, number | boolean> ;
+) => ResultOne<T, K, number | boolean>;
 
 type EntityQuery<T, K extends keyof T = keyof T> =
   | CreateOne<T, K>
@@ -108,10 +89,10 @@ type EntityQuery<T, K extends keyof T = keyof T> =
   | DeleteMany<T, K>
   | BulkMany<T, K>;
 
-type Custom<I, O> = (arg: Required<I>, ...others: []) => O;
+type Custom<I, O> = (arg: Required<I>, ...others: any[]) => O;
 
 export {
-  QuerySchema,
+  Query,
   CreateOne,
   CreateMany,
   ReadOne,
@@ -123,7 +104,6 @@ export {
   BulkOne,
   BulkMany,
   Custom,
-  Query,
   EntityQuery,
   ResultOne,
   ResultMany
