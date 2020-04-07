@@ -11,7 +11,7 @@ import {
 import IUpdate from "../../../../ebr/contract/IUpdate";
 import Valid_User1 from "../../../../abr/validator/user";
 
-export default class Rep2 extends MongoSource<E_User> implements IRepo_User {
+export default class Repo_User extends MongoSource<E_User> implements IRepo_User {
   get toMapWithId() {
     return {
       firstnames: this.firstnames,
@@ -47,7 +47,7 @@ export default class Rep2 extends MongoSource<E_User> implements IRepo_User {
     deletedAt = this.deletedAt,
     _id = this._id
   ) {
-    return new Rep2(
+    return new Repo_User(
       firstnames,
       lastname,
       login,

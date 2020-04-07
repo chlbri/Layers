@@ -5,9 +5,8 @@ import Schema from "./ebr/contract/types/schema";
 import Valid_User1 from "./abr/validator/user";
 import { MongoClient } from "mongodb";
 import Repo_User from "./output/db/mongodb/repo/user";
-import Rep2 from "./output/db/mongodb/repo/user";
 
-const example = new Rep2("Ani Charles-Lévi", "Bri", "chlbri", "123456789");
+const example = new Repo_User("Ani Charles-Lévi", "Bri", "chlbri", "123456789");
 
 for (let index = 0; index < 100; index++) {
   (async () => console.log(await example.copy().q_create()))();
