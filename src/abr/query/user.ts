@@ -3,7 +3,7 @@ import E_User from "../../ebr/entity/user";
 import { NAME, ALL, DELETE, CREDENTIALS } from "../../ebr/helpers/user";
 
 import _Id from "../../ebr/contract/_Id";
-import { ResultOne, Query } from "../contract/types/queries";
+import { ResultOne, Query } from "../contract/queries";
 
 type R<T extends ALL> = ResultOne<E_User, T>;
 

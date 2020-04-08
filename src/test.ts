@@ -2,13 +2,14 @@ import "reflect-metadata";
 import { injectable, inject, Container } from "inversify";
 import _Id from "./ebr/contract/_Id";
 import ITimestamps from "./ebr/contract/ITimestamps";
+import E_User from "./ebr/entity/user";
 
 export interface Warrior {
   fight(): string;
   sneak(): string;
 }
 
-export interface Weapon extends ITimestamps<_Id> {
+export interface Weapon  {
   hit(): string;
 }
 
@@ -65,5 +66,18 @@ myContainer.bind<ThrowableWeapon>(TYPES.ThrowableWeapon).to(Shuriken);
 
 const ninja = myContainer.get<Weapon>(TYPES.Weapon);
 
-console.log(ninja.updates);
+// console.log(ninja.updates);
+type T = keyof E_User;
 
+const tab: (keyof E_User)[] = ["_id", "_id"];
+
+function generate<T extends object>() {
+  const tab: (keyof T)[] = [];
+  const a: Partial<T> = {};
+  console.log( Object.getPrototypeOf(a));
+  
+  Object.getPrototypeOf(a)
+  return Array.from(new Set(Object.keys(a)));
+}
+
+console.log({...["etry", 1]});

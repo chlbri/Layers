@@ -19,3 +19,31 @@ export default class Validator<T> {
     return true;
   }
 }
+
+class Tot{
+  get toMap() {
+    return {
+      label: "this.label",
+      desc: "this.desc",
+      createdAt: "this.createdAt",
+      updates: "this.updates",
+      deletedAt: "this.deletedAt",
+      _id: "this._id"
+    };
+  }
+  toMapQuery() {
+    const toCompute = this.toMap;
+    const tab = [];
+    let out = {};
+    for (const key in toCompute) {
+      if (toCompute.hasOwnProperty(key)) {
+        const element = toCompute;
+        
+      }
+    }
+
+
+
+  }
+}
+

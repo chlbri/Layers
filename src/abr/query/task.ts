@@ -1,5 +1,5 @@
 import _Id from "../../ebr/contract/_Id";
-import { ResultOne, Query } from "../contract/types/queries";
+import { ResultOne, Query } from "../contract/queries";
 import E_Task from "../../ebr/entity/task";
 import { ALL, CREATE, READ, UPDATE, DELETE } from "../../ebr/helpers/task";
 
@@ -11,10 +11,10 @@ type ResultUpdate = R<UPDATE>;
 type ResultDelete = R<DELETE>;
 
 export default interface Queries {
-  q_create: Query<ResultCreate>;
-  q_read: Query<ResultRead>;
-  q_update: Query<ResultUpdate>;
-  q_delete: Query<ResultDelete>;
+  q_create: Query<R<CREATE>>;
+  q_read: Query<R<READ>>;
+  q_update: Query<R<READ>>;
+  q_delete: Query<R<READ>>;
 }
 
 export { ResultCreate, ResultRead, ResultUpdate, ResultDelete };

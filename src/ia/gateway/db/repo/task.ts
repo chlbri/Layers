@@ -8,5 +8,5 @@ export interface IRepo_Task
   extends IRepo,
     E_Task,
     Queries,
-    ValidateBy<E_Task>,
-    ICopy<IRepo_Task> {}
+    ValidateBy<E_Task>,ICopy<IRepo_Task>
+ {}
