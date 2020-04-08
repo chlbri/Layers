@@ -1,3 +1,5 @@
+import "reflect-metadata"
+
 import {
   Collection,
   CollectionBulkWriteOptions,
@@ -27,10 +29,7 @@ import {
 } from "mongodb";
 
 import Validator from "../../../../ebr/contract/Validator";
-import T from "../../../../ebr/entity/user";
-import { Projection } from "./Types";
-import { ResultOne } from "../../../../abr/contract/types/queries2";
-import { PropTypes } from "../../../../ebr/contract/types/utils";
+import { injectable } from "inversify";
 
 // #region MongoDB Config
 const MONGODB_URL = "mongodb://localhost:27017";
@@ -40,11 +39,13 @@ const CON_OPTIONS: MongoClientOptions = {
   useNewUrlParser: true,
   connectTimeoutMS: 5000
 };
+
 const DB_OPTIONS: MongoClientCommonOption = {};
 const COL_OPTIONS: DbCollectionOptions = {};
 const ERROR_VALUE: false = false;
 // #endregion
 
+@injectable()
 export default abstract class MongoSource<T extends {}> {
   static readonly MONGODB_URL = MONGODB_URL;
   static readonly DB_NAME = DB_NAME;

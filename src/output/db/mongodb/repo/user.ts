@@ -1,6 +1,7 @@
 import MongoSource, { ERROR_VALUE } from "../contracts/SourceCollection";
+import "reflect-metadata"
 import E_User from "../../../../ebr/entity/user";
-import { IRepo_User } from "../../../../ia/gateway/repo/user";
+import { IRepo_User } from "../../../../ia/gateway/db/repo/user";
 import {
   InsertOneWriteOpResult,
   WithId,
@@ -10,8 +11,10 @@ import {
 } from "mongodb";
 import IUpdate from "../../../../ebr/contract/IUpdate";
 import Valid_User1 from "../../../../abr/validator/user";
+import { injectable } from "inversify";
 
-export default class Repo_User extends MongoSource<E_User> implements IRepo_User {
+@injectable()
+export default class User_Mongo extends MongoSource<E_User> implements IRepo_User {
   get toMapWithId() {
     return {
       firstnames: this.firstnames,
@@ -47,7 +50,7 @@ export default class Repo_User extends MongoSource<E_User> implements IRepo_User
     deletedAt = this.deletedAt,
     _id = this._id
   ) {
-    return new Repo_User(
+    return new User_Mongo(
       firstnames,
       lastname,
       login,
