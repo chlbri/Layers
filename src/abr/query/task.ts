@@ -5,10 +5,10 @@ import { ALL, CREATE, READ, UPDATE, DELETE } from "../../ebr/helpers/task";
 
 type R<T extends ALL> = ResultOne<E_Task, T>;
 
-type ResultCreate = R<CREATE>;
-type ResultRead = R<READ>;
-type ResultUpdate = R<UPDATE>;
-type ResultDelete = R<DELETE>;
+type TaskCreated = R<CREATE>;
+type TaskRead = R<READ>;
+type TaskUpdated = R<UPDATE>;
+type TaskDeleted = R<DELETE>;
 
 export default interface Queries {
   q_create: Query<R<CREATE>>;
@@ -17,4 +17,4 @@ export default interface Queries {
   q_delete: Query<R<READ>>;
 }
 
-export { ResultCreate, ResultRead, ResultUpdate, ResultDelete };
+export { TaskCreated, TaskRead, TaskUpdated, TaskDeleted };

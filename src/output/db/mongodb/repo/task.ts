@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import "reflect-metadata";
-import MongoSource, { ERROR_VALUE } from "../contracts/SourceCollection";
+import MongoSource, { ERROR_VALUE } from "../contracts/MongoSource";
 import {
   InsertOneWriteOpResult,
   DeleteWriteOpResultObject,
@@ -17,11 +17,21 @@ import { IRepo_Task } from "../../../../ia/gateway/db/repo/task";
 import { injectable } from "inversify";
 import Validator from "../../../../ebr/contract/Validator";
 import S_Task from "../../../../ebr/validation/task";
-import {ExcludeNull }from "../../../../core/utils";
-import { ResultCreate } from "../../../../abr/query/task";
+import { ExcludeNull } from "../../../../core/utils";
+import {
+  TaskCreated,
+  TaskRead,
+  TaskUpdated,
+  TaskDeleted
+} from "../../../../abr/query/task";
 
 @injectable() /* extends MongoSource<E_Task> */
-export default class Task_Mongo implements IRepo_Task {
+export default class Task_Mongo extends MongoSource<E_Task>
+  implements IRepo_Task {
+  get toInsert() {
+    return this.toMap;
+  }
+
   get toMap() {
     return {
       label: this.label,
@@ -49,71 +59,26 @@ export default class Task_Mongo implements IRepo_Task {
 
   // #region CRUD
   async q_create(args?: CollectionInsertOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_Task
-    >("task");
-    if (!col) return ERROR_VALUE;
-    const give = this.toMapQuery;
-    give.createdAt = new Date();
-
-    const result = col
-      .insertOne(give, args)
-      .then(arg => {
-        const r: ResultCreate = arg.ops[0];
-        return r;
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r = await super.q_create(args);
+    if (typeof r === "number") return r;
+    const { label, desc } = r;
+    // console.log("Testing .... : ", r);
+    return { label, desc };
   }
 
   async q_read(args?: FindOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_Task
-    >("task");
-    if (!col) return ERROR_VALUE;
-    const result = col
-      .findOne(this.toMapQuery, args)
-      .then(arg => {
-        if (!arg) return 1;
-        const { desc, label, createdAt } = arg;
-        if (!createdAt) return 2;
-        return { desc, label, createdAt };
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r: TaskRead = await super.q_read(args);
+    return r;
   }
 
   async q_update(arg: UpdateQuery<E_Task>, args?: UpdateOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_Task
-    >("task");
-    if (!col) return ERROR_VALUE;
-    console.log(this.toMapQuery);
-    console.log(this);
-
-    const result = col
-      .updateOne(this.toMapQuery, arg, args)
-      .then(arg => {
-        return arg.modifiedCount === 1 ? 1 : arg.matchedCount === 1 ? 2 : 0;
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r: TaskUpdated = await super.q_update(arg, args);
+    return r;
   }
 
   async q_delete(args?: CommonOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_Task
-    >("task");
-    if (!col) return ERROR_VALUE;
-    const result = col
-      .deleteOne(this.toMapQuery, args)
-      .then(arg => arg.deletedCount === 1)
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r: TaskDeleted = await super.q_delete(args);
+    return r;
   }
   // #endregion
 
@@ -130,6 +95,7 @@ export default class Task_Mongo implements IRepo_Task {
   }
 
   constructor() {
+    super();
     this.label = "";
     this.desc = "";
   }

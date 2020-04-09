@@ -49,12 +49,12 @@ const ERROR_VALUE: false = false;
 // #endregion
 
 @injectable()
-export default abstract class MongoSource<T extends { deletedAt: Date }> {
+export default abstract class MongoSource<T extends {}> {
   // #region Abstract
   abstract readonly validator?: Validator<T>;
   abstract readonly col: string;
   abstract get toInsert(): any;
-  protected abstract get ToMap(): T;
+  protected abstract get toMap(): T;
   // #endregion
 
   getCollectionClientWithType(
@@ -128,7 +128,7 @@ export default abstract class MongoSource<T extends { deletedAt: Date }> {
   // #endregion
 
   get toMapQuery() {
-    const toCompute = this.ToMap;
+    const toCompute = this.toMap;
     const tab: (keyof T)[] = [];
     for (const key in toCompute) {
       if (toCompute.hasOwnProperty(key) && toCompute[key]) {
@@ -159,9 +159,11 @@ export default abstract class MongoSource<T extends { deletedAt: Date }> {
   async q_create(args?: CollectionInsertOneOptions) {
     const { col, client } = await this.getCollectionClientWithType();
     if (!col) return DbResponse.CONNECTIONFAILED;
+    const inserting = this.toInsert;
+    inserting.createdAt = new Date();
     const result = col
-      .insertOne(this.toInsert, args)
-      .then(r => r.ops[0])
+      .insertOne(inserting, args)
+      .then(() => this.toMap)
       .catch(() => DbResponse.ERROR)
       .finally(() => client.close());
 
@@ -185,7 +187,7 @@ export default abstract class MongoSource<T extends { deletedAt: Date }> {
     if (!col) return DbResponse.CONNECTIONFAILED;
     const result = col
       .findOneAndUpdate(this.toMapQuery, update, options)
-      .then(r => (!r ? ERROR_VALUE : r.value))
+      .then(r => (!r.value ? DbResponse.FAIL : r.value))
       .catch(() => DbResponse.ERROR)
       .finally(() => client.close());
 
@@ -197,7 +199,7 @@ export default abstract class MongoSource<T extends { deletedAt: Date }> {
     if (!col) return DbResponse.CONNECTIONFAILED;
     const deletedAt = new Date();
     const result = col
-      .updateOne(this.toMapQuery, { deletedAt }, options)
+      .updateOne(this.toMapQuery, { $set: {deletedAt} }, options)
       .then(r =>
         r.modifiedCount === 1
           ? DbResponse.COMPLETED

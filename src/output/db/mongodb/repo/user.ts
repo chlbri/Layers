@@ -1,4 +1,4 @@
-import MongoSource, { ERROR_VALUE } from "../contracts/SourceCollection";
+import MongoSource, { ERROR_VALUE, DbResponse } from "../contracts/MongoSource";
 import "reflect-metadata";
 import E_User from "../../../../ebr/entity/user";
 import { IRepo_User } from "../../../../ia/gateway/db/repo/user";
@@ -17,9 +17,17 @@ import { injectable } from "inversify";
 import Validator from "../../../../ebr/contract/Validator";
 import S_User from "../../../../ebr/validation/user";
 import { ExcludeNull } from "../../../../core/utils";
+import E_Task from "../../../../ebr/entity/task";
 
 @injectable()
-export default class User_Mongo implements IRepo_User {
+export default class User_Mongo extends MongoSource<E_User>
+  implements IRepo_User {
+  col = "user";
+
+  get toInsert() {
+    return this.toMap;
+  }
+
   validator = new Validator(S_User);
 
   get toMap() {
@@ -33,10 +41,6 @@ export default class User_Mongo implements IRepo_User {
       deletedAt: this.deletedAt,
       _id: this._id
     };
-  }
-
-  get validate() {
-    return this.validator.validate(this);
   }
 
   get toMapQuery() {
@@ -57,85 +61,81 @@ export default class User_Mongo implements IRepo_User {
   // #region Queries
   // #region CRUD
   async q_create(args?: CollectionInsertOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_User
-    >("user");
-    if (!col) return ERROR_VALUE;
-    const give = this.toMapQuery;
-    give.createdAt = new Date();
-    const result = col
-      .insertOne(give, args)
-      .then(arg => {
-        const { firstnames, lastname } = arg.ops[0];
-        return { firstnames, lastname };
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r = await super.q_create(args);
+    if (typeof r === "number") return r;
+    const { firstnames, lastname } = r;
+    return { firstnames, lastname };
   }
 
   async q_read(args?: FindOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_User
-    >("user");
-    if (!col) return ERROR_VALUE;
-    const result = col
-      .findOne(this.toMapQuery, args)
-      .then(arg => {
-        if (!arg) return 1;
-        const { firstnames, lastname } = arg;
-        return { firstnames, lastname };
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r = await super.q_read(args);
+    if (typeof r === "number") return r;
+    const { firstnames, lastname, login, mdp, _id } = r;
+    return { firstnames, lastname, login, mdp, _id };
   }
 
   async q_update(arg: UpdateQuery<E_User>, args?: UpdateOneOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_User
-    >("user");
-    if (!col) return ERROR_VALUE;
-    console.log(this.toMapQuery);
-    console.log(this);
-
-    const result = col
-      .updateOne(this.toMapQuery, arg, args)
-      .then(arg => {
-        return arg.modifiedCount === 1 ? 1 : arg.matchedCount === 1 ? 2 : 0;
-      })
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r = await super.q_update(arg, args);
+    if (typeof r === "number") return r;
+    const { firstnames, lastname, login, mdp } = r;
+    return { firstnames, lastname, login, mdp };
   }
 
   async q_delete(args?: CommonOptions) {
-    const { col, client } = await MongoSource.getCollectionClientWithType<
-      E_User
-    >("user");
-    if (!col) return ERROR_VALUE;
-    const result = col
-      .deleteOne(this.toMapQuery, args)
-      .then(arg => arg.deletedCount === 1)
-      .catch(() => ERROR_VALUE)
-      .finally(() => client.close());
-    return result;
+    const r = await super.q_delete(args);
+    return r;
   }
   // #endregion
 
-  async q_login(args?: FindOneOptions) {
+  static async search_deleted() {
     // #region Connect to Collection
-    if (!this.validate) return ERROR_VALUE;
     const { col, client } = await MongoSource.getCollectionClientWithType<
       E_User
     >("user");
-    if (!col) return ERROR_VALUE;
+    if (!col) return DbResponse.CONNECTIONFAILED;
     // #endregion
     // #region query
+
     const result = await col
-      .findOne(this.toMapQuery, args)
-      .then(r => !!r)
-      .catch(() => ERROR_VALUE)
+      .find({ deletedAt: { $ne: null } })
+      .project({
+        firstnames: true,
+        lastname: true,
+        _id: false,
+        deletedAt: true,
+      })
+      .toArray()
+      .then(r => {
+        return r;
+      })
+      .catch(r => {
+        console.log(r);
+        return DbResponse.ERROR;
+      })
+      .finally(() => client.close());
+
+    return result;
+    // #endregion
+  }
+  async q_login() {
+    // #region Connect to Collection
+    if (!this.validate) return DbResponse.FAIL;
+    const { col, client } = await this.getCollectionClientWithType();
+    if (!col) return DbResponse.CONNECTIONFAILED;
+    // #endregion
+    // #region query
+    console.log("MapQuery ..... :\n", this.toMapQuery);
+
+    const result = await col
+      .findOne(this.toMapQuery, {
+        projection: { lastname: true, firstnames: true, _id: false }
+      })
+      .then(r => {
+        console.log(r);
+
+        return !!r ? DbResponse.COMPLETED : DbResponse.FAIL;
+      })
+      .catch(() => DbResponse.ERROR)
       .finally(() => client.close());
 
     return result;
@@ -165,6 +165,7 @@ export default class User_Mongo implements IRepo_User {
   }
 
   constructor() {
+    super();
     this.firstnames = "";
     this.lastname = "";
     this.login = "";

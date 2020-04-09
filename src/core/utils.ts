@@ -22,6 +22,7 @@ function Reverse(arg: { [r: number]: string }) {
       reverse[el] = parseInt(key);
     }
   }
+  
   return reverse;
 }
 
