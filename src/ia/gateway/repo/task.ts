@@ -1,8 +1,9 @@
-import ValidateBy from "../db/contract/validate_by";
-import IRepo from "../db/contract/IRepo";
+
 import E_Task from "../../../ebr/entity/task";
 import Queries from "../../../abr/query/task";
-import ICopy from "../db/contract/ICopy";
+import IRepo from "../contract/IRepo";
+import ValidateBy from "../contract/validate_by";
+import ICopy from "../contract/ICopy";
 
 export interface IRepo_Task
   extends IRepo,

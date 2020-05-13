@@ -1,8 +1,7 @@
 import IRepo from "../contract/IRepo";
 import { Helper } from "../../../ebr/contract/types/helpers";
 import E_User from "../../../ebr/entity/user";
-import { ResultOne } from "../../../abr/contract/queries";
-import { Query } from "mongoose";
+import { ResultOne, Query } from "../../../abr/contract/queries";
 import ValidateBy from "../contract/validate_by";
 import ICopy from "../contract/ICopy";
 
@@ -48,4 +47,4 @@ export interface IRepo_User
     E_User,
     Queries,
     ValidateBy<E_User>,
-    ICopy<E_User> {}
+    ICopy<IRepo_User> {}
