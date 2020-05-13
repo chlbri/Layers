@@ -1,11 +1,8 @@
 import MongoSource, { ERROR_VALUE, DbResponse } from "../contracts/MongoSource";
 import "reflect-metadata";
 import E_User from "../../../../ebr/entity/user";
-import { IRepo_User } from "../../../../ia/gateway/db/repo/user";
+import { IRepo_User } from "../../../../ia/gateway/repo/user";
 import {
-  InsertOneWriteOpResult,
-  DeleteWriteOpResultObject,
-  UpdateWriteOpResult,
   FindOneOptions,
   CollectionInsertOneOptions,
   UpdateOneOptions,
@@ -14,10 +11,9 @@ import {
 } from "mongodb";
 import IUpdate from "../../../../ebr/contract/IUpdate";
 import { injectable } from "inversify";
-import Validator from "../../../../ebr/contract/Validator";
-import S_User from "../../../../ebr/validation/user";
+import Validator from "../../../../ia/gateway/Validator";
+import S_User from "../../../../ia/gateway/validation/user";
 import { ExcludeNull } from "../../../../core/utils";
-import E_Task from "../../../../ebr/entity/task";
 
 @injectable()
 export default class User_Mongo extends MongoSource<E_User>
@@ -156,7 +152,8 @@ export default class User_Mongo extends MongoSource<E_User>
     firstnames?: string | string[],
     lastname?: string,
     login?: string,
-    mdp?: string
+    mdp?: string,
+    ll?:number
   ) {
     this.firstnames = firstnames;
     this.lastname = lastname;

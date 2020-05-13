@@ -1,5 +1,5 @@
-import Schema from "../contract/types/schema";
-import E_Task from "../entity/task";
+import Schema from "../../../ebr/contract/types/schema";
+import E_Task from "../../../ebr/entity/task";
 
 const S_Task: Schema<E_Task> = {
   propParams: {

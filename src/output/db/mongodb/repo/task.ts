@@ -13,10 +13,10 @@ import {
 } from "mongodb";
 import IUpdate from "../../../../ebr/contract/IUpdate";
 import E_Task from "../../../../ebr/entity/task";
-import { IRepo_Task } from "../../../../ia/gateway/db/repo/task";
+import { IRepo_Task } from "../../../../ia/gateway/repo/task";
 import { injectable } from "inversify";
-import Validator from "../../../../ebr/contract/Validator";
-import S_Task from "../../../../ebr/validation/task";
+import Validator from "../../../../ia/gateway/Validator";
+import S_Task from "../../../../ia/gateway/validation/task";
 import { ExcludeNull } from "../../../../core/utils";
 import {
   TaskCreated,

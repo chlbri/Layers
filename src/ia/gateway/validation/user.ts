@@ -1,5 +1,5 @@
-import Schema from "../contract/types/schema";
-import E_User from "../entity/user";
+import Schema from "../../../ebr/contract/types/schema";
+import E_User from "../../../ebr/entity/user";
 
 const S_User: Schema<E_User> = {
   propParams: {

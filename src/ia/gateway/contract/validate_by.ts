@@ -1,4 +1,4 @@
-import Validator from "../../../../ebr/contract/Validator";
+import Validator from "../Validator";
 
 export default interface ValidateBy<T>{
   validator:Validator<T>

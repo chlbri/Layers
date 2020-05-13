@@ -1,4 +1,3 @@
-import _Id from "../../ebr/contract/_Id";
 import { ResultOne, Query } from "../contract/queries";
 import E_Task from "../../ebr/entity/task";
 import { ALL, CREATE, READ, UPDATE, DELETE } from "../../ebr/helpers/task";

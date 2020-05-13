@@ -6,7 +6,7 @@ import MSSQL_CONTAINER from "./container/mssql";
 import PG_CONTAINER from "./container/pg";
 import SERVER_CONTAINER from "./container/server";
 import SQLITE_CONTAINER from "./container/sqlite";
-import Dispatcher from "../../contract/dispatcher";
+import Dispatcher from "../contract/Dispatcher";
 
 const ALL = {
   embedded: EMBEDDED_CONTAINER,

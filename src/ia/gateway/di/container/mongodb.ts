@@ -2,8 +2,8 @@ import { IRepo_Task } from "../../repo/task";
 import { Container } from "inversify";
 import { IRepo_User } from "../../repo/user";
 import { TYPES } from "../types";
-import User_Mongo from "../../../../../output/db/mongodb/repo/user";
-import Task_Mongo from "../../../../../output/db/mongodb/repo/task";
+import User_Mongo from "../../../../output/db/mongodb/repo/user";
+import Task_Mongo from "../../../../output/db/mongodb/repo/task";
 
 const MONGODB_CONTAINER = new Container();
 

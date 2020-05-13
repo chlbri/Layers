@@ -27,7 +27,7 @@ import {
   FindOneAndUpdateOption
 } from "mongodb";
 
-import Validator from "../../../../ebr/contract/Validator";
+import Validator from "../../../../ia/gateway/Validator";
 import { injectable } from "inversify";
 import ITimestamps from "../../../../ebr/contract/ITimestamps";
 import _Id from "../../../../ebr/contract/_Id";

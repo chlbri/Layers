@@ -1,8 +1,8 @@
-import { IRepo_User } from "./ia/gateway/db/repo/user";
-import { TYPES } from "./ia/gateway/db/di/types";
-import { IRepo_Task } from "./ia/gateway/db/repo/task";
+import { IRepo_User } from "./ia/gateway/repo/user";
+import { TYPES } from "./ia/gateway/di/types";
+import { IRepo_Task } from "./ia/gateway/repo/task";
 
-import DB_CONTAINER from "./ia/gateway/db/di/dispatcher";
+import DB_CONTAINER from "./ia/gateway/di/dispatcher";
 import User_Mongo from "./output/db/mongodb/repo/user";
 
 const example = DB_CONTAINER.get<IRepo_User>(TYPES.IRepo_User);
@@ -16,20 +16,18 @@ for (let index = 0; index < 20; index++) {
   (async () => console.log(await example.copy().q_create()))();
 }
 
-(async () =>
-  console.log(
-    await example.q_update({ $set: { lastname: "AAAAHH" } })
-  ))();
-(async () => console.log(await example.q_read()))();
-
 for (let index = 0; index < 20; index++) {
   (async () => console.log(await example2.copy().q_create()))();
 }
 
 (async () =>
-  console.log(await example2.q_update({ $set: { desc: "AAAAHH" } })))();
+  console.log(await example.q_update({ $set: { lastname: "AAAAHH" } })))();
 (async () =>
-  console.log(await example.q_delete( )))();
+  console.log(await example2.q_update({ $set: { desc: "AAAAHH" } })))();
+(async () => console.log(await example.q_read()))();
+(async () => console.log(await example.q_delete()))();
 (async () => console.log(await example2.q_read()))();
 (async () => console.log(await example.q_login()))();
 (async () => console.log(await User_Mongo.search_deleted()))();
+
+
