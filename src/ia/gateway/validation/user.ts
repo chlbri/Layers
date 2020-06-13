@@ -1,16 +1,15 @@
-import Schema from "../../../ebr/contract/types/schema";
-import E_User from "../../../ebr/entity/user";
+import SchemaClass from "../../../domain/contract/Pipe";
+import E_User from "../../../domain/entities/user";
 
-const S_User: Schema<E_User> = {
+const S_User: SchemaClass<E_User> = {
   propParams: {
-    createdAt: d => true,
-    updates: d => true,
-    firstnames: d => true,
-    mdp: d => true,
-    lastname: d => true,
-    deletedAt: d => true,
-    login: d => true,
-    _id: d => true
+    createdAt: () => true,
+    firstnames: () => true,
+    mdp: () => true,
+    lastname: () => true,
+    deletedAt: () => true,
+    login: () => true,
+    uid: () => true
   },
   classParams: arg => true
 };

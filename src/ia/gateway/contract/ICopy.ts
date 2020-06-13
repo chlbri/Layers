@@ -1,19 +1,14 @@
-import E_User from "../../../ebr/entity/user";
+import E_User from "../../../domain/entities/user";
+import { UnionToTuple } from "../../../core/Tuplify";
 
 export default interface ICopy<T> {
-  copy(...args: any): T;
-  compute(...args: any): void;
+  copy(args: T): T;
+  compute(args: T): void;
 }
 
-function Tuplify<T extends any[]>(...args: T) {
-  return args;
-}
-
-interface Person {
-  name: string;
-  age: number;
-}
-
-
-
-
+const c: ICopy<E_User> = {
+  compute(t) {},
+  copy(last) {
+    return {};
+  },
+};

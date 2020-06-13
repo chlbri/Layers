@@ -1,16 +1,15 @@
-import Schema from "../../../ebr/contract/types/schema";
-import E_Task from "../../../ebr/entity/task";
+import E_Task from "../../../domain/entities/task";
+import SchemaClass from "../../../domain/contract/Pipe";
 
-const S_Task: Schema<E_Task> = {
+const S_Task: SchemaClass<E_Task> = {
   propParams: {
-    createdAt: d => true,
-    updates: d => true,
-    label: d => true,
-    desc: d => true,
-    deletedAt: d => true,
-    _id: d => true
+    createdAt: () => true,
+    label: () => true,
+    desc: () => true,
+    deletedAt: () => true,
+    uid: () => true
   },
-  classParams: arg => true
+  // classParams: () => true
 };
 
 export default S_Task;

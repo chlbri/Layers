@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { injectable, inject, Container } from "inversify";
-import _Id from "./ebr/contract/_Id";
-import ITimestamps from "./ebr/contract/ITimestamps";
-import E_User from "./ebr/entity/user";
+import uid from "./domain/contract/uid";
+import ITimestamps from "./domain/contract/ITimestamps";
+import E_User from "./domain/entities/user";
 
 export interface Warrior {
   fight(): string;
@@ -69,7 +69,7 @@ const ninja = myContainer.get<Weapon>(TYPES.Weapon);
 // console.log(ninja.updates);
 type T = keyof E_User;
 
-const tab: (keyof E_User)[] = ["_id", "_id"];
+const tab: (keyof E_User)[] = ["uid", "uid"];
 
 function generate<T extends object>() {
   const tab: (keyof T)[] = [];
