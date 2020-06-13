@@ -1,6 +1,6 @@
-import Domain from "../../domain/contract/Domain";
+import Domain from "./Domain";
 
-export default function useCaseHook<
+export default function useCase<
   D extends Domain,
   K extends keyof D
 >(domain: D, useCase: K): D[K]['call'] {

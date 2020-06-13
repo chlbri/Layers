@@ -1,6 +1,3 @@
-import uid from "./uid";
-import DataProperties from "./Entity";
-
 type PropTypes<T extends object> = T extends {
   [rt in keyof T]: infer U;
 }

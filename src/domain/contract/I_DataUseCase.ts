@@ -1,6 +1,6 @@
 import IRepo from "./IRepo";
 import E_User from "../entities/user";
-import ReturnData from "./Return";
+import ReturnData from "./ReturnData";
 import { DataTypes } from "./utils";
 import Entity from "./Entity";
 import Validator from "./Validator";

@@ -1,8 +1,8 @@
-import DataProperties from "./Entity";
-import I_UseCase, { UseCaseFunction } from "./I_UseCase";
-import ReturnData from "./Return";
+import DataProperties from "../../domain/contract/Entity";
+import I_UseCase, { UseCaseFunction } from "../../domain/contract/I_UseCase";
+import ReturnData from "../../domain/contract/ReturnData";
 import Dispatcher from "../../ia/gateway/contract/Dispatcher";
-import useCaseHook from "../../ui/contracts/useCaseHook";
+import useCase from "./useCase";
 
 type Domain = {
   [P: string]: I_UseCase<any>;
@@ -33,7 +33,7 @@ const c = {
   erre: new Use2(),
 };
 
-const setter = useCaseHook(c, "erre");
+const setter = useCase(c, "erre");
 
 (async () =>
   console.log(

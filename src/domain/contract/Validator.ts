@@ -1,16 +1,17 @@
 import S, { SchemaProperty } from "./Pipe";
+import Entity from "./Entity";
 
-export default class Validator<T> {
+export default class Validator<T extends Entity> {
   constructor(public schema: S<T>) {}
 
   validate(...args: Partial<T>[]) {
     const propParams = this.schema.propParams;
     const classParams = this.schema.classParams;
     if (propParams) {
-      return args.some(this.validateParams(propParams));
+      return args.every(this.validateParams(propParams));
     }
     if (classParams) {
-      return args.some((val) => !classParams(val));
+      return args.every((val) => !classParams(val));
     }
     return true;
   }

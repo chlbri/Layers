@@ -69,7 +69,7 @@ const ninja = myContainer.get<Weapon>(TYPES.Weapon);
 // console.log(ninja.updates);
 type T = keyof E_User;
 
-const tab: (keyof E_User)[] = ["uid", "uid"];
+const tab: (keyof E_User)[] = ['uid'];
 
 function generate<T extends object>() {
   const tab: (keyof T)[] = [];
