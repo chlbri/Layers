@@ -3,7 +3,7 @@ import Entity from "../../domain/contract/Entity";
 import { Nullish } from "../../core/Nullish";
 import { Query } from "../../domain/contract/Query";
 
-export type NQP<E extends (DataTypes | Entity)[]> = Nullish<Query<E>>;
+export type NQP<E extends (DataTypes | Entity)[]> = Query<E>;
 
 export default interface CRUD<E extends Entity> {
   create: NQP<[Partial<E>]>;

@@ -84,7 +84,7 @@ class GetValidPermissions implements I_UseCase {
   }
 
   private isAlreadyIn(arg1: UseCase, arg2: UseCase) {
-    return arg1.uid === arg2.uid;
+    return arg1._id === arg2._id;
   }
 
   private getUseCasesFromPermissions() {

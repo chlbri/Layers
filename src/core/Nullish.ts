@@ -1,6 +1,6 @@
 import * as Color from "color";
 
-type Nullish<T extends {}> = T | null | undefined;
+type Nullish<T = never> = T | null | undefined;
 type NullishString = Nullish<string>;
 type NullishNumber = Nullish<number>;
 type NullishBoolean = Nullish<boolean>;

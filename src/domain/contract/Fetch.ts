@@ -9,4 +9,26 @@ const Fetch = {
 type FetchStatus = keyof typeof Fetch;
 type FetchResponses = typeof Fetch[FetchStatus];
 
-export { Fetch, FetchStatus, FetchResponses };
+function isGood(arg: FetchStatus) {
+  return arg < 205;
+}
+
+function isFetchStatus(arg: number): arg is FetchStatus {
+  const inner = arg.toString();
+  return Object.keys(Fetch).includes(inner);
+}
+
+function isBad(arg: FetchStatus) {
+  return arg > 205;
+}
+
+
+
+export {
+  Fetch,
+  FetchStatus,
+  FetchResponses,
+  isGood,
+  isBad,
+  isFetchStatus,
+};

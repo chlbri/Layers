@@ -20,4 +20,5 @@ type NRequired<T> = {
 
 type NOmit<T, K extends keyof T> = Omit<T, K>;
 
+
 export { AllowedNames, SubType, Without, NRequired, NOmit };

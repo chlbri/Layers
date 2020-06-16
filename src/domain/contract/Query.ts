@@ -1,15 +1,16 @@
 import { DataTypes } from "./Data";
 import Entity from "./Entity";
-import IFuntcion from "./IFunction";
+import NFunction from "./NFunction";
+import ReturnData from "./ReturnData";
 
 type Query<
   I extends (DataTypes | Entity)[] = (DataTypes | Entity)[],
   O extends DataTypes | Entity = DataTypes | Entity
-> = IFuntcion<I, O>;
+> = NFunction<I, Promise<ReturnData<O>>>;
 
 type BulkQuery<
   I extends (DataTypes | Entity)[] = (DataTypes | Entity)[],
   O extends any = any
-> = IFuntcion<I, O>;
+> = NFunction<I, O>;
 
 export { Query, BulkQuery };

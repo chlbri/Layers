@@ -6,7 +6,7 @@ import Validator from "./Validator";
 import I_UseCase from "./I_UseCase";
 import uid from "./uid";
 import { Nullish } from "../../core/Nullish";
-import IFuntcion from "./IFunction";
+import NFunction from "./NFunction";
 
 // type Case<T> = {
 //   [P in Exclude<keyof T, "call">]: IRepo;
@@ -14,7 +14,7 @@ import IFuntcion from "./IFunction";
 
 export default interface IData_UseCase<E extends Entity & uid>
   extends I_UseCase {
-  call: IFuntcion;
+  call: NFunction;
   validator?: Nullish<Validator<E>>;
 }
 
