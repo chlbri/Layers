@@ -1,7 +1,6 @@
 import { FetchStatus } from "./Fetch";
-import E_User from "../entities/user";
-import { DataTypes } from "./utils";
-import { Nullish } from "../../core/Types";
+import E_User from "../Entities/User";
+import { DataTypes } from "./Data";
 import DataProperties from "./Entity";
 
 type Extract<T, U extends T> = T extends U ? T : never;

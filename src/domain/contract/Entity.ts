@@ -1,7 +1,8 @@
-import { DataTypes } from "./utils";
+import { DataTypes } from "./Data";
+import IUpdates, { IUpdate } from "./IUpdates";
 
-type Entity<T extends {} = {} > = {
-  [P in keyof T]: DataTypes;
+interface Entity  {
+  
 };
 
 export default Entity;

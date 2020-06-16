@@ -1,5 +1,3 @@
-type Nullish<T extends {}> = T | null | undefined;
-
 type FilterFlags<Base, Condition> = {
   [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 };
@@ -14,6 +12,12 @@ type SubType<Base, Condition> = Pick<
   AllowedNames<Base, Condition>
 >;
 
-type Without<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+type Without<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export { Nullish, AllowedNames, SubType, Without };
+type NRequired<T> = {
+  [P in keyof T]-?: Exclude<T[P], null>;
+};
+
+type NOmit<T, K extends keyof T> = Omit<T, K>;
+
+export { AllowedNames, SubType, Without, NRequired, NOmit };

@@ -8,7 +8,7 @@ export default class Validator<T extends Entity> {
     const propParams = this.schema.propParams;
     const classParams = this.schema.classParams;
     if (propParams) {
-      return args.every(this.validateParams(propParams));
+      if (!args.every(this.validateParams(propParams))) return false;
     }
     if (classParams) {
       return args.every((val) => !classParams(val));

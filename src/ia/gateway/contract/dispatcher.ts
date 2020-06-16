@@ -1,4 +1,4 @@
-import { DataTypes } from "../../../domain/contract/utils";
+import { DataTypes } from "../../../domain/contract/Data";
 
 /**
  * Retournes une propriété d'un pe constant

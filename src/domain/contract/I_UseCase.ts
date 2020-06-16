@@ -1,16 +1,15 @@
-import IRepo from "./IRepo";
-import E_User from "../entities/user";
+import E_User from "../Entities/User";
 import ReturnData from "./ReturnData";
-import { DataTypes } from "./utils";
+import { DataTypes } from "./Data";
 import Entity from "./Entity";
 
 // type Case<T> = {
 //   [P in Exclude<keyof T, "call">]: IRepo;
 // };
-export type UseCaseFunction<T> = (arg: T) => ReturnData<T>;
+export type UseCaseFunction<T extends Entity> = (
+  arg: T
+) => ReturnData<T>;
 
-export default abstract class I_UseCase<
-  E extends Entity
-> {
-  abstract call(arg: E): ReturnData<E>;
+export default interface I_UseCase {
+  call(...args: any[]): any;
 }

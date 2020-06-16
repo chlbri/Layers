@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { injectable, inject, Container } from "inversify";
 import uid from "./domain/contract/uid";
 import ITimestamps from "./domain/contract/ITimestamps";
-import E_User from "./domain/entities/user";
+import E_User from "./domain/Entities/User";
 
 export interface Warrior {
   fight(): string;
