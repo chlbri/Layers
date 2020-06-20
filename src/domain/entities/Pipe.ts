@@ -1,10 +1,13 @@
 import Entity from "../contract/Entity";
-import uid from "../contract/uid";
+import _Id from "../contract/_Id";
 import { NullishString } from "../../core/Nullish";
-import { Pipe as p } from "../contract/Pipe";
 import { Nullish } from "../../core/Nullish";
+import Piped from "../contract/Piped";
 
-export default interface Pipe<Input, Output> extends Entity, uid {
+export default interface E_Pipe<Output>
+  extends Entity,
+    _Id,
+    Piped
+     {
   label?: NullishString;
-  pipe?: Nullish<p<Input, Output>>;
 }

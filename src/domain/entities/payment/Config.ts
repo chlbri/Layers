@@ -1,7 +1,7 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import { NullishNumber } from "../../../core/Nullish";
 
-export default interface ConfigPayment extends Entity, uid {
+export default interface ConfigPayment extends Entity, _Id {
   limit?: NullishNumber;
 }

@@ -1,9 +1,9 @@
-import IData_UseCase from "../../contract/I_DataUseCase";
+import IDataUseCase from "../../contract/IDataUseCase";
 import PlatformPayment from "../../entities/payment/Platform";
 import ReturnData from "../../contract/ReturnData";
 import { Without } from "../../../core/Types";
 
-export default class AssignPlatformPayment extends IData_UseCase<PlatformPayment> {
+export default class AssignPlatformPayment implements IDataUseCase<PlatformPayment> {
   call(
     arg: PlatformPayment
   ): ReturnData<Without<PlatformPayment, "credentials">> {

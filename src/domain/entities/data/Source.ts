@@ -1,10 +1,10 @@
 import { Nullish } from "../../../core/Nullish";
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 
 type NString = Nullish<string>;
 
-export default interface Source extends Entity, uid {
+export default interface Source extends Entity, _Id {
   [P: string]: NString;
   host?: NString;
   login?: NString;

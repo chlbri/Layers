@@ -1,4 +1,4 @@
-import S, { SchemaProperty } from "./Pipe";
+import S, { SchemaProperty } from "./Schema";
 import Entity from "./Entity";
 
 export default class Validator<T extends Entity> {

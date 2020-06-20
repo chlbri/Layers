@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { injectable, inject, Container } from "inversify";
-import uid from "./domain/contract/uid";
+import _Id from "./domain/contract/_Id";
 import ITimestamps from "./domain/contract/ITimestamps";
 import E_User from "./domain/Entities/User";
 
@@ -68,8 +68,6 @@ const ninja = myContainer.get<Weapon>(TYPES.Weapon);
 
 // console.log(ninja.updates);
 type T = keyof E_User;
-
-const tab: (keyof E_User)[] = ['uid'];
 
 function generate<T extends object>() {
   const tab: (keyof T)[] = [];

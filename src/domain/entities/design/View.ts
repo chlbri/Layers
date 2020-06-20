@@ -1,12 +1,12 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import { FlexStyle } from "./FlexStyle";
 import BackgroundStyle from "./Background";
 import BorderStyle from "./Border";
 import { Nullish } from "../../../core/Nullish";
 import UseCase from "../abr/UseCase";
 
-export default interface View extends Entity, uid {
+export default interface View extends Entity, _Id {
   flex: FlexStyle;
   background: BackgroundStyle;
   border: BorderStyle;

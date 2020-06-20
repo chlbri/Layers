@@ -1,10 +1,10 @@
 import E_User from "../Entities/User";
 import ReturnData from "./ReturnData";
-import { DataTypes } from "./Data";
+import { DataTypes } from "./Datatypes";
 import Entity from "./Entity";
 import Validator from "./Validator";
-import I_UseCase from "./I_UseCase";
-import uid from "./uid";
+import I_UseCase from "./IUseCase";
+import _Id from "./_Id";
 import { Nullish } from "../../core/Nullish";
 import NFunction from "./NFunction";
 
@@ -12,7 +12,7 @@ import NFunction from "./NFunction";
 //   [P in Exclude<keyof T, "call">]: IRepo;
 // };
 
-export default interface IData_UseCase<E extends Entity & uid>
+export default interface IData_UseCase<E extends Entity>
   extends I_UseCase {
   call: NFunction;
   validator?: Nullish<Validator<E>>;

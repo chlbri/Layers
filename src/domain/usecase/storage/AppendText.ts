@@ -1,4 +1,4 @@
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 import fs from "fs";
 
 export default class AppendText implements I_UseCase {

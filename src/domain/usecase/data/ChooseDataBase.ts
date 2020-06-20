@@ -1,8 +1,7 @@
-import I_UseCase from "../../contract/I_UseCase";
+import IUseCase from "../../contract/IUseCase";
 
-class ChangeSchema extends I_UseCase{
+export default class ChooseDatabase implements IUseCase {
   call() {
     throw new Error("Method not implemented.");
   }
-  
 }

@@ -1,13 +1,13 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import Source from "./Source";
 import { Nullish } from "../../../core/Nullish";
 import ILabel from "../../contract/ILabel";
-import IRepo from "../../../data/contract/IRepo";
+import IRepo from "../../contract/repo/IRepo";
 
 export default interface Repo<E extends Entity>
   extends Entity,
-    uid,
+    _Id,
     ILabel,
     IRepo<E> {
   sources?: Nullish<Source[]>;

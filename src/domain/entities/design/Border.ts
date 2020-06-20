@@ -1,5 +1,5 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import {
   Nullish,
   NullishNumber,
@@ -8,7 +8,7 @@ import {
 
 type Style = Nullish<"solid" | "dotted" | "dashed">;
 
-export default interface BorderStyle extends Entity, uid {
+export default interface BorderStyle extends Entity, _Id {
   borderBottomColor?: NullishColor;
   borderBottomEndRadius?: NullishNumber;
   borderBottomLeftRadius?: NullishNumber;

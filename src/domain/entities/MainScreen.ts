@@ -1,7 +1,7 @@
 import Entity from "../contract/Entity";
-import uid from "../contract/uid";
+import _Id from "../contract/_Id";
 
-export default interface MainScreen extends Entity, uid {
+export default interface MainScreen extends Entity, _Id {
   label: string;
   prefs: any;
 }

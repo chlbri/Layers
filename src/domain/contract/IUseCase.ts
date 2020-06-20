@@ -1,6 +1,6 @@
 import E_User from "../Entities/User";
 import ReturnData from "./ReturnData";
-import { DataTypes } from "./Data";
+import { DataTypes } from "./Datatypes";
 import Entity from "./Entity";
 
 // type Case<T> = {
@@ -10,6 +10,6 @@ export type UseCaseFunction<T extends Entity> = (
   arg: T
 ) => ReturnData<T>;
 
-export default interface I_UseCase {
+export default interface IUseCase {
   call(...args: any[]): any;
 }

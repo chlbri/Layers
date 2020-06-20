@@ -1,4 +1,4 @@
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 import E_User from "../../Entities/User";
 import { userInfo } from "os";
 import UseCase from "../../entities/abr/UseCase";
@@ -10,7 +10,7 @@ import {
   unionArray,
 } from "../../../core/utils";
 import { isNullOrUndefined } from "util";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 
 /**
  * Lister par degré d'importance
@@ -65,14 +65,14 @@ class GetValidPermissions implements I_UseCase {
       ...useCases,
     };
     const step2 = Object.values(step1)
-      .filter((use) => use.enable)
+      .filter((use) => use)
       .map((use) => nOmit(use, "enable"));
 
     return step2;
   }
 
   private toObject(useCases: UseCase[]) {
-    return convertArrayToObject(useCases, "uid");
+    return convertArrayToObject(useCases, "_id");
   }
 
   private unionUseCase(array: UseCase[]) {
@@ -122,4 +122,3 @@ class GetValidPermissions implements I_UseCase {
   }
 }
 
-const c = new GetValidPermissions({});

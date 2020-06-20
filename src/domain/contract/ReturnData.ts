@@ -1,6 +1,6 @@
 import { FetchStatus } from "./Fetch";
 import E_User from "../Entities/User";
-import { DataTypes } from "./Data";
+import { DataTypes } from "./Datatypes";
 import Entity from "./Entity";
 
 type NExtract<T, U extends T> = T extends U ? T : never;
@@ -10,22 +10,23 @@ type GoodResponse<T = undefined> = {
   status: NExtract<FetchStatus, 200 | 204>;
   payload: T;
 };
-type BadResponse<T extends DataTypes = undefined> = {
+
+type BadResponse<T = undefined> = {
   status: NExclude<FetchStatus, 200 | 204>;
   payload?: T;
 };
 
 type ReturnData<
-  Good extends DataTypes | Entity = undefined,
+  Good = undefined,
   Bad extends DataTypes = undefined
 > = GoodResponse<Good> | BadResponse<Bad>;
 
 type PromiseReturnData<
-  Good extends DataTypes | Entity = undefined,
+  Good = undefined,
   Bad extends DataTypes = undefined
 > = Promise<ReturnData<Good, Bad>>;
 
-const response500: BadResponse = {
+const Response500: BadResponse = {
   status: 500,
 };
 const response300: BadResponse = {
@@ -42,5 +43,5 @@ export {
   PromiseReturnData,
   response300,
   response404,
-  response500,
+  Response500,
 };

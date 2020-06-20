@@ -1,4 +1,4 @@
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 
 export default class WriteFile implements I_UseCase {
   call(...args: any[]) {

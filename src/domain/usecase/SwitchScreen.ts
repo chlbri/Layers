@@ -1,4 +1,4 @@
-import I_UseCase from "../contract/I_UseCase";
+import I_UseCase from "../contract/IUseCase";
 import Screen from "../entities/MainScreen";
 import { Nullish } from "../../core/Nullish";
 

@@ -3,12 +3,12 @@ import {
   FSyncOptions,
   MongoClientOptions,
 } from "mongodb";
-import CRUD from "../crud";
-import Bulk from "../bulk";
+import CRUD from "../../../domain/contract/repo/crud";
+import Bulk from "../../../domain/contract/repo/bulk";
 import NFunction from "../../../domain/contract/NFunction";
 import ReturnData from "../../../domain/contract/ReturnData";
 
-export default interface MongoSourceConfig {
+export default interface MongoSource {
   url: string;
   dbName: string;
   options?: MongoClientOptions;

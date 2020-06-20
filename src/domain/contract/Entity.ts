@@ -1,8 +1,5 @@
-import { DataTypes } from "./Data";
+import { DataTypes } from "./Datatypes";
 import IUpdates, { IUpdate } from "./IUpdates";
+import _Id from "./_Id";
 
-interface Entity  {
-  
-};
-
-export default Entity;
+export default interface Entity extends _Id {}

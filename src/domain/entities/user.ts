@@ -1,4 +1,4 @@
-import uid from "../contract/uid";
+import _Id from "../contract/_Id";
 import ITimestamps from "../contract/ITimestamps";
 import Entity from "../contract/Entity";
 import IUpdates from "../contract/IUpdates";
@@ -12,10 +12,10 @@ type CREDENTIALS = Helper<E_User, "login" | "mdp">;
 
 type NAME = Helper<E_User, "firstnames" | "lastname">;
 
-type CREATE = Helper<E_User, "uid" | NAME | CREDENTIALS>;
+type CREATE = Helper<E_User, "_id" | NAME | CREDENTIALS>;
 type UPDATE = Helper<E_User, NAME | CREDENTIALS>;
 
-type DELETE = Helper<E_User, "uid" | NAME>;
+type DELETE = Helper<E_User, "_id" | NAME>;
 
 type TIMESTAMPS = Helper<E_User, "createdAt" | "deletedAt">;
 
@@ -25,7 +25,7 @@ export { CREDENTIALS, NAME, CREATE, TIMESTAMPS, ALL, DELETE, UPDATE };
 
 export default interface E_User
   extends Entity,
-    uid,
+    _Id,
     ITimestamps,
     IUpdates {
   firstnames?: NullishString;

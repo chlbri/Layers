@@ -1,8 +1,8 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import ITimestamps from "../../contract/ITimestamps";
 
-export default interface PlatformPayment extends Entity, uid {
+export default interface PlatformPayment extends Entity, _Id {
   label: string;
   url: string;
   credentials?: any;

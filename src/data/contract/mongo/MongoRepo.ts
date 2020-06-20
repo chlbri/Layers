@@ -1,31 +1,37 @@
-import { MongoClient, ObjectID } from "mongodb";
-import CRUD from "../crud";
-import Bulk from "../bulk";
-import {
-  PromiseReturnData,
+import { MongoClient, ObjectID, OrderedBulkOperation } from "mongodb";
+import CRUD from "../../../domain/contract/repo/crud";
+import Bulk from "../../../domain/contract/repo/bulk";
+import ReturnData, {
+  PromiseReturnData as PrD,
   BadResponse,
-  response500,
+  Response500,
   GoodResponse,
   response404,
+  response300,
 } from "../../../domain/contract/ReturnData";
-import MongoSourceConfig from "./MongoSource";
-import { isBad } from "../../../domain/contract/Fetch";
-import uid from "../../../domain/contract/uid";
+import MongoSource from "./MongoSource";
+import { isBad, FetchStatus } from "../../../domain/contract/Fetch";
+import _Id from "../../../domain/contract/_Id";
+import Piped from "../../../domain/contract/Piped";
+import { isNil } from "lodash";
+import isNilEvery from "../../../core/Nil";
 
-export default class MongoSource<T extends uid>
-  implements CRUD<T>, Bulk<T> {
+export default class MongoRepo<E extends _Id> extends Piped
+  implements CRUD<E>, Bulk<E> {
   constructor(
     private collection: string,
-    private source: MongoSourceConfig
-  ) {}
+    private source: MongoSource
+  ) {
+    super();
+  }
 
-  async getBulk() {
+  private async getBulk() {
     const { status, payload } = await this.connect().finally(() =>
       console.log("")
     );
 
     if (isBad(status)) {
-      return response500;
+      return Response500;
     }
     const col = payload!
       .db(this.source.dbName)
@@ -33,35 +39,40 @@ export default class MongoSource<T extends uid>
     return col.initializeOrderedBulkOp();
   }
 
-  async execute() {
-    return response500;
-  }
+  private async connect(): PrD<MongoClient> {
+    const client = new MongoClient(
+      this.source.url,
+      this.source.options
+    );
 
-  private get client() {
-    return new MongoClient(this.source.url, this.source.options);
-  }
-
-  private async connect(): PromiseReturnData<MongoClient> {
-    return this.client.connect().then(
+    return client.connect().then(
       (cl) => ({
         status: 200,
         payload: cl,
       }),
-      (_) => ({
-        status: 500,
-      })
+      (_) => {
+        client.close();
+        return {
+          status: 500,
+        };
+      }
     );
   }
 
-  async create(arg: Partial<T>) {
+  close(client: MongoClient, force = false) {
+    return () => client.close(force);
+  }
+
+  async create(arg: Partial<E>) {
     const { status, payload } = await this.connect().finally(() =>
       console.log("")
     );
 
-    if (isBad(status)) {
-      return response500;
+    if (this.errorConnect(status, payload)) {
+      return Response500;
     }
-    const col = payload!
+
+    const col = payload
       .db(this.source.dbName)
       .collection(this.collection);
 
@@ -80,27 +91,27 @@ export default class MongoSource<T extends uid>
         return assert ? response200 : response204;
       })
       .catch((_) => response404)
-      .finally(() => payload!.close());
+      .finally(this.close(payload));
 
     return out;
   }
 
-  async read(arg: Partial<T>) {
+  async read(arg: Partial<E>) {
     const { status, payload } = await this.connect().finally(() =>
       console.log("")
     );
 
-    if (isBad(status)) {
-      return response500;
+    if (this.errorConnect(status, payload)) {
+      return Response500;
     }
-    const col = payload!
+    const col = payload
       .db(this.source.dbName)
-      .collection<T>(this.collection);
+      .collection<E>(this.collection);
     const out = await col
       .findOne(arg)
       .then((val) => {
         const assert = !!val;
-        const response200: GoodResponse<T> = {
+        const response200: GoodResponse<E> = {
           status: 200,
           payload: val!,
         };
@@ -111,20 +122,20 @@ export default class MongoSource<T extends uid>
         return assert ? response200 : response204;
       })
       .catch((_) => response404)
-      .finally(() => payload!.close());
+      .finally(() => payload.close());
 
     return out;
   }
 
-  async update(arg1: Partial<T>, arg2: Partial<T>) {
+  async update(arg1: Partial<E>, arg2: Partial<E>) {
     const { status, payload } = await this.connect().finally(() =>
       console.log("")
     );
 
-    if (isBad(status)) {
-      return response500;
+    if (this.errorConnect(status, payload)) {
+      return Response500;
     }
-    const col = payload!
+    const col = payload
       .db(this.source.dbName)
       .collection(this.collection);
 
@@ -152,7 +163,7 @@ export default class MongoSource<T extends uid>
           : response300;
       })
       .catch((_) => response404)
-      .finally(() => payload!.close());
+      .finally(() => payload.close());
 
     return out;
   }
@@ -162,13 +173,14 @@ export default class MongoSource<T extends uid>
       console.log("")
     );
 
-    if (isBad(status)) {
-      return response500;
+    if (this.errorConnect(status, payload)) {
+      return Response500;
     }
-    const col = payload!
+    const col = payload
       .db(this.source.dbName)
       .collection(this.collection);
     const _id = new ObjectID(arg);
+    col.bulkWrite([]);
     const out = await col
       .findOneAndDelete({ _id })
       .then((val) => {
@@ -184,25 +196,81 @@ export default class MongoSource<T extends uid>
         return assert ? response200 : response204;
       })
       .catch((_) => response404)
-      .finally(() => payload!.close());
+      .finally(() => payload.close());
 
     return out;
   }
 
-  // get createRepo(): CRUD<T> & Bulk<T> {
-  //   return {
-  //     create: this.create,
-  //     read: this.read,
-  //     update: this.update,
-  //     delete: this.delete,
-  //     bulkCreate: this.bulkCreate,
-  //     queryRead: this.queryRead,
-  //     bulkUpdate: this.bulkUpdate,
-  //     bulkDelete: this.bulkDelete,
-  //   };
-  // }
+  private InsertsList: Partial<E>[] = [];
+  private UpdatesList: [Partial<E>, Partial<E>][] = [];
+  private DeletesList: Partial<E>[] = [];
 
-  bulkCreate() {}
-  bulkUpdate() {}
-  bulkDelete() {}
+  bulkCreate(...args: Partial<E>[]) {
+    this.InsertsList.push(...args);
+  }
+
+  bulkUpdate(...args: [Partial<E>, Partial<E>][]) {
+    this.UpdatesList.push(...args);
+  }
+
+  bulkDelete(...args: Partial<E>[]) {
+    this.DeletesList.push(...args);
+  }
+
+  errorConnect(
+    status: FetchStatus,
+    payload: any
+  ): payload is null | undefined {
+    return isBad(status) || !payload;
+  }
+
+  async execute() {
+    const { status, payload } = await this.connect().finally(() =>
+      console.log("")
+    );
+    if (this.errorConnect(status, payload)) {
+      return Response500;
+    }
+
+    if (
+      isNilEvery(this.DeletesList, this.InsertsList, this.UpdatesList)
+    ) {
+      return response300;
+    }
+    /*eslint operator-linebreak: ["error", "after"]*/
+    const Response204: ReturnData<number> = {
+      status: 204,
+      payload: 0,
+    };
+
+    const bulk = payload
+      .db(this.source.dbName)
+      .collection<E>(this.collection)
+      .initializeOrderedBulkOp();
+
+    this.InsertsList.forEach((insert) => bulk.insert(insert));
+    this.UpdatesList.forEach((update) =>
+      bulk.find(update[0]).updateOne(update[1])
+    );
+
+    this.DeletesList.forEach((toDelete) =>
+      bulk.find(toDelete).delete()
+    );
+
+    return await bulk
+      .execute()
+      .then((val) => {
+        const opNumber =
+          val.nInserted + val.nModified + val.nRemoved + val.nUpdated;
+
+        const Response200: ReturnData<number> = {
+          status: 200,
+          payload: opNumber,
+        };
+
+        return opNumber > 1 ? Response200 : Response204;
+      })
+      .catch(() => response404)
+      .finally(() => payload.close());
+  }
 }

@@ -1,5 +1,5 @@
 import U from "./IUpdates";
-import { Nullish } from "../../core/Types";
+import { Nullish } from "../../core/Nullish";
 
 type NullishDate = Nullish<Date>;
 

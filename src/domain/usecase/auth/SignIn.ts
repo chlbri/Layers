@@ -1,7 +1,7 @@
 import Human from "../../contract/Human";
 import ReturnData from "../../contract/ReturnData";
 import Validator from "../../contract/Validator";
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 
 export default class signIn implements I_UseCase{
   call(arg: Human): ReturnData<Human> {

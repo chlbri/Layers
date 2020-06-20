@@ -1,4 +1,4 @@
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 import E_User from "../../Entities/User";
 
 type Options = {

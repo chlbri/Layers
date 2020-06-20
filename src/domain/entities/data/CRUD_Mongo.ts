@@ -1,4 +1,4 @@
-import { DataTypes } from "../../contract/Data";
+import { DataTypes } from "../../contract/Datatypes";
 import Entity from "../../contract/Entity";
 import { Nullish } from "../../../core/Nullish";
 

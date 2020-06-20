@@ -1,5 +1,5 @@
 import Entity from "../../contract/Entity";
-import uid from "../../contract/uid";
+import _Id from "../../contract/_Id";
 import { FlexVerticalContent } from "./Flex";
 import Point from "./Point";
 import { Measure } from "./Measure";
@@ -8,7 +8,7 @@ import Ratio from "./Ratio";
 type Flex = "flex-start" | "flex-end" | "center";
 type Space = "space-between" | "space-around" | "space-evenly";
 
-export interface FlexStyle extends Entity, uid {
+export interface FlexStyle extends Entity, _Id {
   verticalAlign?: Flex | "stretch" | "baseline";
   alignSelf?: "auto" | Flex | "stretch" | "baseline";
   aspectRatio?: Ratio;

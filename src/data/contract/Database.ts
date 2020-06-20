@@ -1,5 +1,5 @@
-import CRUD from "./crud";
-import { DataTypes } from "../../domain/contract/Data";
+import CRUD from "../../domain/contract/repo/crud";
+import { DataTypes } from "../../domain/contract/Datatypes";
 import { Nullish, NullishString } from "../../core/Nullish";
 
 type SourceOptions = {

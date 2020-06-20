@@ -1,4 +1,4 @@
-import IData_UseCase from "../../contract/I_DataUseCase";
+import IData_UseCase from "../../contract/IDataUseCase";
 import PlatformPayment from "../../entities/payment/Platform";
 import ReturnData from "../../contract/ReturnData";
 import { Without } from "../../../core/Types";

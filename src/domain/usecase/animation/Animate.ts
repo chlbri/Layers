@@ -1,9 +1,10 @@
-import I_UseCase from "../../contract/I_UseCase";
+import I_UseCase from "../../contract/IUseCase";
 import ReturnData from "../../contract/ReturnData";
-import IData_UseCase from "../../contract/I_DataUseCase";
+import IData_UseCase from "../../contract/IDataUseCase";
 import Validator from "../../contract/Validator";
+import Animation from "../../entities/animation/Animation";
 
-class Animate<T extends IAnimation> extends IData_UseCase<T> {
+class Animate<T extends Animation> implements IData_UseCase<T> {
 
   call(arg: T): ReturnData<T> {
     throw new Error("Method not implemented.");

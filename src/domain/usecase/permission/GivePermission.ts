@@ -1,4 +1,4 @@
-import IData_UseCase from "../../contract/I_DataUseCase";
+import IData_UseCase from "../../contract/IDataUseCase";
 import Permission from "../../entities/permission/Permission";
 import Validator from "../../contract/Validator";
 import E_User from "../../Entities/User";

@@ -1,7 +1,7 @@
 import { pick, omit } from "lodash";
 import { OnlyFieldsOfType } from "mongodb";
 import { Nullish } from "./Nullish";
-import { Condition } from "../domain/contract/Pipe";
+import { Condition } from "../domain/contract/Schema";
 
 function Reverse(arg: {
   [r: number]: string;
