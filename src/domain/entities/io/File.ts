@@ -5,10 +5,7 @@ import MetaData from "../../contract/storage/MetaData";
 import StorageSource from "../../contract/storage/StorageSource";
 import ILabel from "../../contract/ILabel";
 
-export default interface E_Folder
+export default interface E_File
   extends Entity,
-    _Id,
     StorageSource,
-    ILabel {
-  isEmpty: boolean;
-}
+    ILabel {}

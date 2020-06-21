@@ -1,3 +1,5 @@
+import CopyWith from "./domain/contract/CopyWith";
+
 interface Tst {
   val?: number;
   val2?: string;
@@ -13,4 +15,4 @@ const Tete2: Tst = {
 };
 
 
-console.log({ ...Tete, ...Tete2 });
+console.log(CopyWith(Tete, Tete2));

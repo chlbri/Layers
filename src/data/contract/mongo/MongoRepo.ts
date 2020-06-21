@@ -6,8 +6,8 @@ import ReturnData, {
   BadResponse,
   Response500,
   GoodResponse,
-  response404,
-  response300,
+  Response404,
+  Response300,
 } from "../../../domain/contract/ReturnData";
 import MongoSource from "./MongoSource";
 import { isBad, FetchStatus } from "../../../domain/contract/Fetch";
@@ -90,7 +90,7 @@ export default class MongoRepo<E extends _Id> extends Piped
         };
         return assert ? response200 : response204;
       })
-      .catch((_) => response404)
+      .catch((_) => Response404)
       .finally(this.close(payload));
 
     return out;
@@ -121,7 +121,7 @@ export default class MongoRepo<E extends _Id> extends Piped
         };
         return assert ? response200 : response204;
       })
-      .catch((_) => response404)
+      .catch((_) => Response404)
       .finally(() => payload.close());
 
     return out;
@@ -162,7 +162,7 @@ export default class MongoRepo<E extends _Id> extends Piped
           ? response204
           : response300;
       })
-      .catch((_) => response404)
+      .catch((_) => Response404)
       .finally(() => payload.close());
 
     return out;
@@ -195,7 +195,7 @@ export default class MongoRepo<E extends _Id> extends Piped
         };
         return assert ? response200 : response204;
       })
-      .catch((_) => response404)
+      .catch((_) => Response404)
       .finally(() => payload.close());
 
     return out;
@@ -235,7 +235,7 @@ export default class MongoRepo<E extends _Id> extends Piped
     if (
       isNilEvery(this.DeletesList, this.InsertsList, this.UpdatesList)
     ) {
-      return response300;
+      return Response300;
     }
     /*eslint operator-linebreak: ["error", "after"]*/
     const Response204: ReturnData<number> = {
@@ -270,7 +270,7 @@ export default class MongoRepo<E extends _Id> extends Piped
 
         return opNumber > 1 ? Response200 : Response204;
       })
-      .catch(() => response404)
+      .catch(() => Response404)
       .finally(() => payload.close());
   }
 }

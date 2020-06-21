@@ -3,6 +3,7 @@ import { pick, omit } from "lodash";
 import { OnlyFieldsOfType } from "mongodb";
 import { Nullish } from "./Nullish";
 import { Condition } from "../domain/contract/Schema";
+import { extname } from "path";
 
 function Reverse(arg: {
   [r: number]: string;
@@ -43,6 +44,14 @@ function convertArrayToObject<T extends object, K extends keyof T>(
   );
 }
 
+function checkExtension(path: string, ...checkers: string[]) {
+  for (const checker of checkers) {
+    if (extname(path).toLowerCase() === checker.toLowerCase())
+      return true;
+  }
+  return false;
+}
+
 type unionArrayArgs<T> = {
   array: T[];
   avoid?: (arg1: T, arg2: T) => boolean;
@@ -60,4 +69,10 @@ function unionArray<T extends {}>(args: unionArrayArgs<T>) {
   return out;
 }
 
-export { Reverse, nOmit, convertArrayToObject, unionArray };
+export {
+  Reverse,
+  nOmit,
+  convertArrayToObject,
+  unionArray,
+  checkExtension,
+};

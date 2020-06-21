@@ -29,11 +29,15 @@ type PromiseReturnData<
 const Response500: BadResponse = {
   status: 500,
 };
-const response300: BadResponse = {
+const Response300: BadResponse = {
   status: 300,
 };
-const response404: BadResponse = {
+const Response404: BadResponse = {
   status: 404,
+};
+const Response204: GoodResponse = {
+  status: 204,
+  payload: undefined,
 };
 
 export default ReturnData;
@@ -41,7 +45,8 @@ export {
   GoodResponse,
   BadResponse,
   PromiseReturnData,
-  response300,
-  response404,
+  Response300,
+  Response404,
   Response500,
+  Response204,
 };

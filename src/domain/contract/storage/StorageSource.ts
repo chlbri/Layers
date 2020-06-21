@@ -4,5 +4,5 @@ import MetaData from "./MetaData";
 
 export default interface StorageSource {
   uri: string;
-  metadata?: Nullish<MetaData>;
+  metadata: MetaData;
 }

@@ -7,16 +7,17 @@ import CopyWith from "../../contract/CopyWith";
 import Sequence from "../../entities/animation/Sequence";
 import Animation from "../../entities/animation/Animation";
 import { isEmpty } from "lodash";
+import useCase from "../../contract/useCase";
 
-const _animate: IUseCase = {
+const _animate = {
   call() {
     throw new Error("Method not implemented.");
   },
-} as const;
+} ;
 
 const Repo = "";
 
-const _create: IUseCase = {
+const _create = {
   call(sequence: Sequence) {
     const out: Sequence = {
       _id: "",
@@ -24,15 +25,15 @@ const _create: IUseCase = {
     };
     return out;
   },
-} as const;
+} ;
 
-const _read: IUseCase = {
+const _read = {
   call(sealed: Sequence, change: Partial<Sequence>) {
     return CopyWith(sealed, change);
   },
-} as const;
+} ;
 
-const _getDuration: IUseCase = {
+const _getDuration = {
   call(sequence: Sequence) {
     const anims = sequence.anims;
     if (!anims || isEmpty(anims)) {
@@ -44,9 +45,9 @@ const _getDuration: IUseCase = {
       return duration + start;
     }
   },
-} as const;
+} ;
 
-const _addAnim: IUseCase = {
+const _addAnim = {
   call(
     sequence: Sequence,
     ...anims: (Animation & { start: number })[]
@@ -55,19 +56,19 @@ const _addAnim: IUseCase = {
     out.anims?.push(...anims);
     return out;
   },
-} as const;
+} ;
 
-const _update: IUseCase = {
+const _update = {
   call(sealed: Sequence, change: Sequence) {
     return CopyWith(sealed, change);
   },
-} as const;
+} ;
 
-const _delete: IUseCase = {
+const _delete = {
   call(sealed: Sequence, change: Sequence) {
     return CopyWith(sealed, change);
   },
-} as const;
+} ;
 
 const domain = {
   _create,
@@ -78,5 +79,6 @@ const domain = {
   _addAnim,
   _getDuration,
 } as const;
+
 
 export default domain;

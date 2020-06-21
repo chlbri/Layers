@@ -1,4 +1,4 @@
-import Domain from "../../domain/contract/Domain";
+import Domain from "./Domain";
 
 export default function useCase<
   D extends Domain,

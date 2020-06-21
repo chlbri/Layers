@@ -15,7 +15,7 @@ const _animate = {
 
 const Repo = "";
 
-const _create: IUseCase = {
+const _create = {
   call(use: Animation) {
     const out: Animation = {
       //TODO: Use uuid.v4()
@@ -26,19 +26,19 @@ const _create: IUseCase = {
   },
 };
 
-const _read: IUseCase = {
+const _read = {
   call(sealed: Animation, change: Partial<Animation>) {
     return CopyWith(sealed, change);
   },
 };
 
-const _update: IUseCase = {
+const _update = {
   call(sealed: Animation, change: Animation) {
     return CopyWith(sealed, change);
   },
 };
 
-const _delete: IUseCase = {
+const _delete = {
   call(sealed: Animation, change: Animation) {
     return CopyWith(sealed, change);
   },

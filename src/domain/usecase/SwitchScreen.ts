@@ -1,9 +1,7 @@
 import I_UseCase from "../contract/IUseCase";
-import Screen from "../entities/MainScreen";
 import { Nullish } from "../../core/Nullish";
+import E_Screen from "../entities/routing/Screen";
 
-export default class SwitchScreen implements I_UseCase {
-  call(to : Nullish<Screen>, args?: any) {
-    
-  }
-}
+const switchScreen = {
+  call(to: E_Screen, args?: any) {},
+};

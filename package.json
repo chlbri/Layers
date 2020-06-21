@@ -25,6 +25,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "s-test": "ts-node src/test.ts"
+    "s-test": "ts-node src/index.ts"
   }
 }

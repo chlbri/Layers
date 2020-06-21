@@ -1,5 +1,6 @@
 import Entity from "../Entity";
 
 export default interface MetaData {
-  [key: string]: string;
+  [key: string]: boolean | string;
+  isFromApp: boolean;
 }
