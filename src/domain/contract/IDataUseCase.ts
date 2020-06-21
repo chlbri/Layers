@@ -12,7 +12,7 @@ import NFunction from "./NFunction";
 //   [P in Exclude<keyof T, "call">]: IRepo;
 // };
 
-export default interface IData_UseCase<E extends Entity>
+export default interface IDataUseCase<E extends Entity>
   extends I_UseCase {
   call: NFunction;
   validator?: Nullish<Validator<E>>;

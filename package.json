@@ -1,30 +1,30 @@
 {
-   "name": "layers",
-   "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
-   "devDependencies": {
-      "@types/inversify-inject-decorators": "^2.0.0",
-      "@types/lodash": "^4.14.149",
-      "@types/mongodb": "^3.5.4",
-      "@types/node": "^8.0.29",
-      "inversify": "^5.0.1",
-      "inversify-inject-decorators": "^3.1.0",
-      "reflect-metadata": "^0.1.13",
-      "ts-node": "3.3.0",
-      "typescript": "3.3.3333"
-   },
-   "dependencies": {
-      "@types/color": "^3.0.1",
-      "@types/mongoose": "^5.7.8",
-      "color": "^3.1.2",
-      "mikro-orm": "^3.6.0",
-      "mongodb": "^3.5.5",
-      "mongoose": "^5.9.7",
-      "ts-transformer-keys": "^0.4.1",
-      "uuid": "^8.1.0"
-   },
-   "scripts": {
-      "start": "ts-node src/index.ts",
-      "s-test": "ts-node src/test.ts"
-   }
+  "name": "layers",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "devDependencies": {
+    "@types/inversify-inject-decorators": "^2.0.0",
+    "@types/lodash": "^4.14.149",
+    "@types/mongodb": "^3.5.4",
+    "@types/node": "^8.0.29",
+    "inversify": "^5.0.1",
+    "inversify-inject-decorators": "^3.1.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "3.3.0",
+    "typescript": "3.3.3333"
+  },
+  "dependencies": {
+    "@types/color": "^3.0.1",
+    "@types/mongoose": "^5.7.8",
+    "color": "^3.1.2",
+    "mikro-orm": "^3.6.0",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.7",
+    "ts-transformer-keys": "^0.4.1",
+    "uuid": "^8.1.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "s-test": "ts-node src/test.ts"
+  }
 }

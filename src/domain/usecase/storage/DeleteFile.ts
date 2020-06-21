@@ -1,6 +1,6 @@
-import I_UseCase from "../../contract/IUseCase";
+import IUseCase from "../../contract/IUseCase";
 
-export default class DeleteFile implements I_UseCase {
+export default class DeleteFile implements IUseCase {
   call(...args: any[]) {
     throw new Error("Method not implemented.");
   }

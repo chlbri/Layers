@@ -5,6 +5,7 @@ type NullishString = Nullish<string>;
 type NullishNumber = Nullish<number>;
 type NullishBoolean = Nullish<boolean>;
 type NullishColor = Nullish<Color>;
+type NullishDate = Nullish<Date>;
 
 export {
   Nullish,
@@ -12,4 +13,5 @@ export {
   NullishNumber,
   NullishBoolean,
   NullishColor,
+  NullishDate
 };

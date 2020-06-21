@@ -1,23 +1,14 @@
-import ReturnData from "../../contract/ReturnData";
-import IDataUseCase from "../../contract/IDataUseCase";
-import Validator from "../../contract/Validator";
-import Animation from "../../entities/animation/Animation";
 import IUseCase from "../../contract/IUseCase";
-import UseCase from "../../Entities/abr/UseCase";
+import UseCase from "../../entities/abr/UseCase";
 import CopyWith from "../../contract/CopyWith";
+import Domain from "../../contract/Domain";
 import E_User from "../../Entities/User";
-
-const _animate = {
-  call() {
-    throw new Error("Method not implemented.");
-  },
-};
 
 const Repo = "";
 
 const _create: IUseCase = {
-  call(use: Animation) {
-    const out: Animation = {
+  call(use: UseCase) {
+    const out: UseCase = {
       //TODO: Use uuid.v4()
       _id: "",
       ...use,
@@ -27,30 +18,33 @@ const _create: IUseCase = {
 };
 
 const _read: IUseCase = {
-  call(sealed: Animation, change: Partial<Animation>) {
+  call(sealed: UseCase, change: Partial<UseCase>) {
     return CopyWith(sealed, change);
   },
 };
 
 const _update: IUseCase = {
-  call(sealed: Animation, change: Animation) {
+  call(sealed: UseCase, change: UseCase) {
     return CopyWith(sealed, change);
   },
 };
 
 const _delete: IUseCase = {
-  call(sealed: Animation, change: Animation) {
+  call(sealed: UseCase, change: UseCase) {
     return CopyWith(sealed, change);
   },
 };
 
+const _assign: IUseCase = {
+  call(use: UseCase, user: E_User) {},
+};
 
 const domain = {
   _create,
   _read,
   _update,
   _delete,
-  _animate,
+  _assign,
 } as const;
 
 export default domain;

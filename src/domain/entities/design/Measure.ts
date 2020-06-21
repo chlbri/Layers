@@ -1,5 +1,6 @@
-type MeasureValue = "%" | "px" | 'dp';
+type MeasureValue = "%" | "px" | "dp";
 
 type Measure = [number, MeasureValue];
 
-export { Measure };
+export { MeasureValue };
+export default Measure;

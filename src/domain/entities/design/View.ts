@@ -1,12 +1,12 @@
 import Entity from "../../contract/Entity";
 import _Id from "../../contract/_Id";
 import { FlexStyle } from "./FlexStyle";
-import BackgroundStyle from "./Background";
-import BorderStyle from "./Border";
+import BackgroundStyle from "./BackgroundStyle";
+import BorderStyle from "./BorderStyle";
 import { Nullish } from "../../../core/Nullish";
 import UseCase from "../abr/UseCase";
 
-export default interface View extends Entity, _Id {
+export default interface E_View extends Entity, _Id {
   flex: FlexStyle;
   background: BackgroundStyle;
   border: BorderStyle;
@@ -23,6 +23,6 @@ export default interface View extends Entity, _Id {
    * @platform android
    */
   elevation?: number;
-  children: Nullish<View[]>
+  children: Nullish<E_View[]>
   useCases: Nullish<UseCase[]>;
 }

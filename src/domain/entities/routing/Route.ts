@@ -3,9 +3,9 @@ import _Id from "../../contract/_Id";
 import E_View from "../design/View";
 import { Nullish, NullishString } from "../../../core/Nullish";
 import UseCase from "../abr/UseCase";
+import E_Screen from "./Screen";
 
-export default interface E_Screen extends Entity {  
+export default interface E_Route extends Entity {
   label: NullishString;
-  children?: Nullish<E_View[]>;
-  useCases?: Nullish<UseCase[]>;
+  screen: E_Screen;
 }

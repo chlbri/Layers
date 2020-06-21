@@ -1,81 +1,16 @@
-import "reflect-metadata";
-import { injectable, inject, Container } from "inversify";
-import _Id from "./domain/contract/_Id";
-import ITimestamps from "./domain/contract/ITimestamps";
-import E_User from "./domain/Entities/User";
-
-export interface Warrior {
-  fight(): string;
-  sneak(): string;
+interface Tst {
+  val?: number;
+  val2?: string;
 }
 
-export interface Weapon  {
-  hit(): string;
-}
-
-export interface ThrowableWeapon {
-  throw(): string;
-}
-
-const TYPES = {
-  Warrior: Symbol.for("Warrior"),
-  Weapon: Symbol.for("Weapon"),
-  ThrowableWeapon: Symbol.for("ThrowableWeapon")
+const Tete: Tst = {
+  val: 4,
+  val2: "gbtrdtgfrd",
+};
+const Tete2: Tst = {
+  val: 5,
+  val2:undefined
 };
 
-@injectable()
-class Katana implements Weapon {
-  public hit() {
-    return "cut!";
-  }
-}
 
-@injectable()
-class Shuriken implements ThrowableWeapon {
-  public throw() {
-    return "hit!";
-  }
-}
-
-@injectable()
-class Ninja implements Warrior {
-  private _katana: Weapon;
-  private _shuriken: ThrowableWeapon;
-
-  public constructor(
-    @inject(TYPES.Weapon) katana: Weapon,
-    @inject(TYPES.ThrowableWeapon) shuriken: ThrowableWeapon
-  ) {
-    this._katana = katana;
-    this._shuriken = shuriken;
-  }
-  ttrr!: number;
-
-  public fight() {
-    return this._katana.hit();
-  }
-  public sneak() {
-    return this._shuriken.throw();
-  }
-}
-
-const myContainer = new Container();
-myContainer.bind<Warrior>(TYPES.Warrior).to(Ninja);
-myContainer.bind<Weapon>(TYPES.Weapon).to(Katana);
-myContainer.bind<ThrowableWeapon>(TYPES.ThrowableWeapon).to(Shuriken);
-
-const ninja = myContainer.get<Weapon>(TYPES.Weapon);
-
-// console.log(ninja.updates);
-type T = keyof E_User;
-
-function generate<T extends object>() {
-  const tab: (keyof T)[] = [];
-  const a: Partial<T> = {};
-  console.log( Object.getPrototypeOf(a));
-  
-  Object.getPrototypeOf(a)
-  return Array.from(new Set(Object.keys(a)));
-}
-
-console.log({...["etry", 1]});
+console.log({ ...Tete, ...Tete2 });

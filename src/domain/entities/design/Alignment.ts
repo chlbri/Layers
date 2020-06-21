@@ -1,4 +1,4 @@
-type Center =
+type Alignment =
   | "TopLeft"
   | "TopCenter"
   | "Right"
@@ -9,4 +9,4 @@ type Center =
   | "BottomCenter"
   | "BottomRight";
 
-export default Center;
+export default Alignment;

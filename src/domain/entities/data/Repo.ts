@@ -10,5 +10,4 @@ export default interface Repo<E extends Entity>
     _Id,
     ILabel,
     IRepo<E> {
-  sources?: Nullish<Source[]>;
 }

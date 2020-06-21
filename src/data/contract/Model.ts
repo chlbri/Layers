@@ -7,7 +7,7 @@ function toJson(entity: Entity) {
 
 function fromJson<E extends Entity>(json: string) {
   const out = JSON.parse(json) as E;
-  if (!out) return undefined;
+  return out;
 }
 
 function validate<E extends Entity>(

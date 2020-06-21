@@ -2,7 +2,7 @@ import Entity from "../../contract/Entity";
 import _Id from "../../contract/_Id";
 import * as Color from "color";
 import { Nullish } from "../../../core/Nullish";
-import Image from "./Image";
+import E_Image from "./Image";
 
 
 type InitialInherit = "initial" | "inherit";
@@ -11,7 +11,7 @@ import Point from "./Point";
 
 export default interface BackgroundStyle extends Entity, _Id {
   color?: Nullish<Color>;
-  image?: Nullish<Image>;
+  image?: Nullish<E_Image>;
   gradient?: Nullish<Color[]>;
   gradientAngle?: Nullish<number>;
   backgroundAttachment?: Nullish<

@@ -1,7 +1,4 @@
-import U from "./IUpdates";
-import { Nullish } from "../../core/Nullish";
-
-type NullishDate = Nullish<Date>;
+import { NullishDate } from "../../core/Nullish";
 
 export default interface ITimestamps {
   createdAt?: NullishDate;

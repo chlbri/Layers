@@ -1,8 +1,11 @@
 import Entity from "../../contract/Entity";
 import _Id from "../../contract/_Id";
-import ImageSource from "./ImageSource";
 import { NullishNumber } from "../../../core/Nullish";
+import StorageSource from "../../contract/storage/StorageSource";
 
-export default interface Image extends Entity, _Id, ImageSource{
+
+export default interface E_Image extends Entity,  StorageSource{
   scale?: NullishNumber,
+  width: number;
+  heigth: number;
 }

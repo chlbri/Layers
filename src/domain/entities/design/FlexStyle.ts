@@ -1,8 +1,7 @@
 import Entity from "../../contract/Entity";
 import _Id from "../../contract/_Id";
-import { FlexVerticalContent } from "./Flex";
 import Point from "./Point";
-import { Measure } from "./Measure";
+import Measure from "./Measure";
 import Ratio from "./Ratio";
 
 type Flex = "flex-start" | "flex-end" | "center";

@@ -4,9 +4,10 @@ import Entity from "../contract/Entity";
 import IUpdates from "../contract/IUpdates";
 import { Helper } from "../contract/helper";
 import { NullishString, Nullish } from "../../core/Nullish";
-import Permission from "./permission/Permission";
+import E_Permission from "./permission/Permission";
 import UseCase from "./abr/UseCase";
-import PermissionGroup from "./permission/Group";
+import E_PermissionGroup from "./permission/Group";
+import E_PermissionRole from "./permission/Role";
 
 type CREDENTIALS = Helper<E_User, "login" | "mdp">;
 
@@ -33,6 +34,7 @@ export default interface E_User
   login?: NullishString;
   mdp?: NullishString;
   useCases?: UseCase[];
-  permissions?: Nullish<Permission[]>;
-  permissionGroups?: Nullish<PermissionGroup[]>;
+  permissions?: Nullish<E_Permission[]>;
+  permissionRoles?: Nullish<E_PermissionRole[]>;
+  permissionGroups?: Nullish<E_PermissionGroup[]>;
 }

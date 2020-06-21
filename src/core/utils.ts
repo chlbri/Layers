@@ -1,3 +1,4 @@
+const isNullOrUndefined = require("util").isNullOrUndefined;
 import { pick, omit } from "lodash";
 import { OnlyFieldsOfType } from "mongodb";
 import { Nullish } from "./Nullish";
@@ -30,32 +31,31 @@ function nOmit<T extends object, K extends (keyof T)[]>(
 
 function convertArrayToObject<T extends object, K extends keyof T>(
   array: T[],
-  key: K
-): { [r: string]: Omit<T, K> } {
+  key: K,
+  omit = false
+): { [r: string]: T } {
   return Object.assign(
     {},
     ...array.map((el) => {
       const innerKey = (el[key] as any) as string;
-      return { [innerKey]: omit(el, key) };
+      return { [innerKey]: omit ? nOmit(el, key) : el };
     })
   );
 }
 
 type unionArrayArgs<T> = {
   array: T[];
-  isAlreadyIn: (arg1: T, arg2: T) => boolean;
-  checker?: Nullish<Condition<T>>;
+  avoid?: (arg1: T, arg2: T) => boolean;
 };
 
-function unionArray<T extends object>(args: unionArrayArgs<T>) {
+function unionArray<T extends {}>(args: unionArrayArgs<T>) {
   const out: T[] = [];
+  const avoid = args.avoid;
   for (const arg of args.array) {
-    const alReadyIn = args.array.find((el) =>
-      args.isAlreadyIn(el, arg)
+    const checker = out.some((el) =>
+      avoid ? avoid(el, arg) : el === arg
     );
-    const inChecker =
-      !alReadyIn || !args.checker || args.checker(alReadyIn);
-    if (inChecker) out.push(arg);
+    if (!checker) out.push(arg);
   }
   return out;
 }

@@ -1,4 +1,4 @@
-import { Measure } from "./Measure";
+import Measure from "./Measure";
 
 export default interface Point {
   x: Measure;

@@ -1,4 +1,3 @@
-import { Pipe } from "./Piped";
 import NFunction from "./NFunction";
 
 type Condition<T = any> = (arg: T) => boolean;
