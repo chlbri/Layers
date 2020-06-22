@@ -1,5 +1,5 @@
 import fs from "fs";
-import io_file_domain from "./file";
+import io_file_domain, { TEXT_EXTENSIONS } from "./file";
 import useCase from "../../contract/useCase";
 import ReturnData, {
   Response300,
@@ -95,6 +95,9 @@ function writeOrAppendSync(
         payload: append,
       };
     }
+  }else{
+    console.log("NOOOOO");
+    
   }
   return out;
 }
@@ -125,8 +128,6 @@ function readTextAsync(
   });
   return out;
 }
-
-const TEXT_EXTENSIONS = ["txt", "srt", "json", "csv"];
 
 const _appendText = {
   /**
@@ -178,4 +179,8 @@ const io_text_domain = {
   _deleteText,
 };
 
+
+
 export default io_text_domain;
+
+export { TEXT_EXTENSIONS };

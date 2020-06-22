@@ -10,6 +10,9 @@ import ReturnData, {
 } from "../../contract/ReturnData";
 import { isEmpty } from "lodash";
 
+// #region Config
+const TEXT_EXTENSIONS = [".txt", ".srt", ".json", ".csv"];
+
 function renameAsync(
   uri: string,
   newuri: string,
@@ -32,11 +35,11 @@ function renameAsync(
   return inner;
 }
 
-function renameSync<T extends E_File>(
+function renameSync(
   uri: string,
   newuri: string,
-  inner: ReturnData<T>,
-  file: T,
+  inner: ReturnData<E_File>,
+  file: E_File,
   label: string
 ) {
   if (fs.existsSync(uri)) {
@@ -49,6 +52,7 @@ function renameSync<T extends E_File>(
   }
   return inner;
 }
+// #endregion
 
 const _setMetadata = {
   call(file: E_File, metadata: MetaData) {
@@ -99,6 +103,10 @@ const _rename = {
 
 const _create = {
   call(file: E_File) {
+    const uri = file.uri;
+    if (_checkExtensions.call(uri, ...TEXT_EXTENSIONS)) {
+      fs.writeFileSync("txt.txt", "svfhdfkd");
+    }
     //TODO: stocker le fichier
     return file;
   },
@@ -112,6 +120,16 @@ const io_file_domain = {
   _create,
 };
 
-export default io_file_domain;
+const d = _rename.call({
+  uri: "txt.txt",
+  metadata: {
+    isFromApp: true,
+  },
+  
+}, 'rename');
+console.log(d);
 
+
+export default io_file_domain;
+export { TEXT_EXTENSIONS };
 // export { renameAsync, renameSync };
