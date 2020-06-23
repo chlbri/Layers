@@ -70,10 +70,17 @@ const _delete = {
   },
 };
 
+
 const _checkExtensions = {
-  call: (path: string, ...checkers: string[]) => {
+  /**
+   * 
+   * @param file L'adresse du ficier
+   * @param checkers 
+   */
+  call(uri: string, ...checkers: string[]) {
     for (const checker of checkers) {
-      if (extname(path).toLowerCase() === checker.toLowerCase())
+
+      if (extname(uri).toLowerCase() === checker.toLowerCase())
         return true;
     }
     return false;
@@ -90,7 +97,7 @@ const _rename = {
     const ext = extname(uri);
     const _dirName = dirname(uri);
     out = Response300;
-    const newuri = join(_dirName, label, ".", ext);
+    const newuri = join(_dirName, `${label}${ext}`);
     const parameters = [uri, newuri, out, file, label] as const;
     if (isFromApp) {
       out = renameSync(...parameters);
@@ -121,12 +128,12 @@ const io_file_domain = {
 };
 
 const d = _rename.call({
-  uri: "txt.txt",
+  uri: "rename.txt",
   metadata: {
     isFromApp: true,
   },
   
-}, 'rename');
+}, 'rename2');
 console.log(d);
 
 

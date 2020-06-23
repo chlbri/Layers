@@ -225,9 +225,7 @@ export default class MongoRepo<E extends _Id> extends Piped
   }
 
   async execute() {
-    const { status, payload } = await this.connect().finally(() =>
-      console.log("")
-    );
+    const { status, payload } = await this.connect()
     if (this.errorConnect(status, payload)) {
       return Response500;
     }
@@ -261,7 +259,7 @@ export default class MongoRepo<E extends _Id> extends Piped
       .execute()
       .then((val) => {
         const opNumber =
-          val.nInserted + val.nModified + val.nRemoved + val.nUpdated;
+          val.nInserted + val.nModified + val.nRemoved;
 
         const Response200: ReturnData<number> = {
           status: 200,

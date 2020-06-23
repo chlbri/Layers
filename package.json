@@ -3,23 +3,30 @@
   "version": "0.0.1",
   "description": "Awesome project developed with TypeORM.",
   "devDependencies": {
+    "@types/chai": "^4.2.11",
     "@types/color": "^3.0.1",
     "@types/inversify-inject-decorators": "^2.0.0",
-    "@types/lodash": "^4.14.149",
-    "@types/node": "^8.0.29",
+    "@types/lodash": "^4.14.156",
+    "@types/mocha": "^7.0.2",
+    "@types/mongodb": "^3.5.23",
+    "@types/node": "^8.10.61",
     "@types/uuid": "^8.0.0",
+    "chai": "^4.2.0",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
-    "reflect-metadata": "^0.1.13"
+    "mocha": "^8.0.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
   },
   "dependencies": {
     "color": "^3.1.2",
-    "mikro-orm": "^3.6.0",
+    "mikro-orm": "^3.6.15",
+    "mongodb": "^3.5.9",
     "uuid": "^8.1.0"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --esModuleInterop -w",
-    "s-test": "node build/index.js"
+    "tsc": "tsc",
+    "tsc-w": "tsc -w"
   }
 }
